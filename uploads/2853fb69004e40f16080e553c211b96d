@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?><Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"><ext:UBLExtensions><ext:UBLExtension><ext:ExtensionContent><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" Id="IdSingEfact"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><ds:Reference URI=""><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>YZLc/5XyX+5wevklL6motCSHh4Q=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>PtW7QDAohnooKP0Ic+vdIFpFen+HtIyz6BbLIGKnyKZ96TQIYS0xtSz2QYXxSWV9qdROpMNHemd6mvaQvUVGjQ+T/fN8y21cqWyQVSSF89bjklrL30Dmoa1PebVp1WgjGqKOsGtbiocH0K5ZerKFhICjr+OL+NLztaUDFyGWHwBvktF7DmeUr3oJyzPql+ALkQaoLTupLMjZgweRzfBwU1ztDyWQJA/8ed+fGrF9+szcrL2tPu1cfOGg78i+x9BALlhxr+NenvazyaRNzNYDVC1a+VgcpDcb+FDjYyMrArFVvjDv+b4p/pGLRcMLWmqxlK8k+lf5heztzB6SdR/Z4g==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>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</ds:X509Certificate><ds:X509IssuerSerial><ds:X509IssuerName>1.2.840.113549.1.9.1=#1612726d616e74696c6c614065666163742e7065,CN=EFACT S.A.C.,OU=RENAN MARTIN MANTILLA RAMIREZ - DNI 41710212,OU=Certificado corporativo de representación,OU=Validated by Peru Secure E Net SAC,OU=JEFE DE OPERACIONES,OU=RUC: 20551093035,O=EFACT S.A.C.,L=Lima,C=PE</ds:X509IssuerName><ds:X509SerialNumber>1137338135814772988886909172314798513226539601</ds:X509SerialNumber></ds:X509IssuerSerial></ds:X509Data></ds:KeyInfo></ds:Signature></ext:ExtensionContent></ext:UBLExtension></ext:UBLExtensions>
+   <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+   <cbc:CustomizationID>2.0</cbc:CustomizationID>
+   <cbc:ID>F014-00030560</cbc:ID>
+   <cbc:IssueDate>2024-08-15</cbc:IssueDate>
+   <cbc:DueDate>2024-09-14</cbc:DueDate>
+   <cbc:InvoiceTypeCode listID="0101" listSchemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo51" name="Tipo de Operacion">01</cbc:InvoiceTypeCode>
+   <cbc:Note languageLocaleID="1000">ciento cuarenta mil setecientos uno con 24/100 SOLES</cbc:Note>
+   <cbc:Note languageID="A">140027</cbc:Note>
+   <cbc:Note languageID="B">12397866793</cbc:Note>
+   <cbc:Note languageID="C">TBH-863</cbc:Note>
+   <cbc:Note languageID="D">THC-979</cbc:Note>
+   <cbc:Note languageID="E">169212-060-290723</cbc:Note>
+   <cbc:Note languageID="G">CASTILLO AZAÑERO, RONAL JOZMER</cbc:Note>
+   <cbc:Note languageID="H">D-44188326</cbc:Note>
+   <cbc:Note languageID="I">CREDITO 30 DIAS</cbc:Note>
+   <cbc:Note languageID="L">10:01:15</cbc:Note>
+   <cbc:Note languageID="M">EMPRESA DE TRANSPORTES UCEDA S.A.C.</cbc:Note>
+   <cbc:Note languageID="N">33694.79</cbc:Note>
+   <cbc:Note languageID="O">20481221162</cbc:Note>
+   <cbc:Note languageID="P">119238.34</cbc:Note>
+   <cbc:Note languageID="Q">21462.90</cbc:Note>
+   <cbc:Note languageID="R">140701.24</cbc:Note>
+   <cbc:Note languageID="S">Operación sujeta a percepción 0.01 % de : S/ 1407.01 - Total a cobrar: S/ 142108.25</cbc:Note>
+   <cbc:DocumentCurrencyCode listAgencyName="United Nations Economic Commission for Europe" listID="ISO 4217 Alpha" listName="Currency">PEN</cbc:DocumentCurrencyCode>
+   <cbc:LineCountNumeric>1</cbc:LineCountNumeric>
+   <cac:Signature>
+      <cbc:ID>sign20600427734</cbc:ID>
+      <cac:SignatoryParty>
+         <cac:PartyIdentification>
+            <cbc:ID>20600427734</cbc:ID>
+         </cac:PartyIdentification>
+         <cac:PartyName>
+            <cbc:Name>HIDROCARBUROS DEL MUNDO S.A.C.</cbc:Name>
+         </cac:PartyName>
+      </cac:SignatoryParty>
+      <cac:DigitalSignatureAttachment>
+         <cac:ExternalReference>
+            <cbc:URI>#sign20600427734</cbc:URI>
+         </cac:ExternalReference>
+      </cac:DigitalSignatureAttachment>
+   </cac:Signature>
+   <cac:AccountingSupplierParty>
+      <cac:Party>
+         <cac:PartyIdentification>
+            <cbc:ID schemeAgencyName="PE:SUNAT" schemeID="6" schemeName="Documento de Identidad" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">20600427734</cbc:ID>
+         </cac:PartyIdentification>
+         <cac:PartyName>
+            <cbc:Name>HIDROCARBUROS DEL MUNDO S.A.C.</cbc:Name>
+         </cac:PartyName>
+         <cac:PartyLegalEntity>
+            <cbc:RegistrationName>HIDROCARBUROS DEL MUNDO S.A.C.</cbc:RegistrationName>
+            <cac:RegistrationAddress>
+               <cbc:ID schemeAgencyName="PE:INEI" schemeName="Ubigeos">150122</cbc:ID>
+               <cbc:AddressTypeCode listAgencyName="PE:SUNAT" listName="Establecimientos anexos">0000</cbc:AddressTypeCode>
+               <cbc:CityName>LIMA                                                                                                            Razon Social: HIDROCARBUROS DEL MUNDO S.A.C.</cbc:CityName>
+               <cbc:CountrySubentity>LIMA</cbc:CountrySubentity>
+               <cbc:District>MIRAFLORES</cbc:District>
+               <cac:AddressLine>
+                  <cbc:Line>AV. BENAVIDES NRO. 620 INT. 703</cbc:Line>
+               </cac:AddressLine>
+               <cac:Country>
+                  <cbc:IdentificationCode listAgencyName="United Nations Economic Commission for Europe" listID="ISO 3166-1" listName="Country">PE</cbc:IdentificationCode>
+               </cac:Country>
+            </cac:RegistrationAddress>
+         </cac:PartyLegalEntity>
+      </cac:Party>
+   </cac:AccountingSupplierParty>
+   <cac:AccountingCustomerParty>
+      <cac:Party>
+         <cac:PartyIdentification>
+            <cbc:ID schemeAgencyName="PE:SUNAT" schemeID="6" schemeName="Documento de Identidad" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">20514606774</cbc:ID>
+         </cac:PartyIdentification>
+         <cac:PartyName>
+            <cbc:Name>C &amp; M SERVICENTROS S.A.C</cbc:Name>
+         </cac:PartyName>
+         <cac:PartyLegalEntity>
+            <cbc:RegistrationName>C &amp; M SERVICENTROS S.A.C</cbc:RegistrationName>
+            <cac:RegistrationAddress>
+               <cbc:ID schemeAgencyName="PE:INEI" schemeName="Ubigeos">150131</cbc:ID>
+               <cbc:CityName>LIMA</cbc:CityName>
+               <cbc:CountrySubentity>LIMA</cbc:CountrySubentity>
+               <cbc:District>LIMA</cbc:District>
+               <cac:AddressLine>
+                  <cbc:Line>AV. LOS CONQUISTADORES NRO. 1041 INT. 301 URB. CHACARILLA SANTA CRUZ (TERCER PISO)</cbc:Line>
+               </cac:AddressLine>
+               <cac:Country>
+                  <cbc:IdentificationCode listAgencyName="United Nations Economic Commission for Europe" listID="ISO 3166-1" listName="Country">PE</cbc:IdentificationCode>
+               </cac:Country>
+            </cac:RegistrationAddress>
+         </cac:PartyLegalEntity>
+         <cac:Contact>
+            <cbc:ElectronicMail>MONITOREO@CMEMPRESASPERU.COM,nfierro@cmempresasperu.com; estacion.cmchancay@cmempresasperu.com</cbc:ElectronicMail>
+         </cac:Contact>
+      </cac:Party>
+   </cac:AccountingCustomerParty>
+   <cac:Delivery>
+      <cac:Shipment>
+         <cbc:ID schemeAgencyName="PE:SUNAT" schemeName="Motivo de Traslado" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo20"/>
+         <cbc:Information/>
+         <cac:ShipmentStage>
+            <cbc:Instructions/>
+            <cac:CarrierParty>
+               <cac:PartyIdentification>
+                  <cbc:ID schemeAgencyName="PE:SUNAT" schemeID="6" schemeName="Documento de Identidad" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"/>
+               </cac:PartyIdentification>
+               <cac:PartyLegalEntity>
+                  <cbc:RegistrationName/>
+                  <cbc:CompanyID/>
+               </cac:PartyLegalEntity>
+            </cac:CarrierParty>
+            <cac:TransportMeans>
+               <cbc:RegistrationNationalityID>CALLAO</cbc:RegistrationNationalityID>
+               <cac:RoadTransport>
+                  <cbc:LicensePlateID schemeName="">2O</cbc:LicensePlateID>
+               </cac:RoadTransport>
+            </cac:TransportMeans>
+         </cac:ShipmentStage>
+         <cac:Delivery>
+            <cac:DeliveryAddress>
+               <cbc:ID schemeAgencyName="PE:INEI" schemeName="Ubigeos">070106</cbc:ID>
+               <cbc:CitySubdivisionName>2J</cbc:CitySubdivisionName>
+               <cbc:CityName>PROV. CONST. DEL CALLAO</cbc:CityName>
+               <cbc:CountrySubentity>PROV. CONST. DEL CALLAO</cbc:CountrySubentity>
+               <cbc:District>VENTANILLA</cbc:District>
+               <cac:AddressLine>
+                  <cbc:Line>JR PUNO MZ A 3 LT B PARQUE INDUSTRIAL PORCINO</cbc:Line>
+               </cac:AddressLine>
+               <cac:Country>
+                  <cbc:IdentificationCode>PE</cbc:IdentificationCode>
+               </cac:Country>
+            </cac:DeliveryAddress>
+         </cac:Delivery>
+         <cac:OriginAddress>
+            <cbc:ID schemeAgencyName="PE:INEI" schemeName="Ubigeos">070101</cbc:ID>
+            <cbc:CitySubdivisionName>2C</cbc:CitySubdivisionName>
+            <cbc:CityName>PROV. CONST. DEL CALLAO</cbc:CityName>
+            <cbc:CountrySubentity>PROV. CONST. DEL CALLAO</cbc:CountrySubentity>
+            <cbc:District>CALLAO</cbc:District>
+            <cac:AddressLine>
+               <cbc:Line>AV. NESTOR GAMBETA 1265 Z.I. -.- CALLAO, CALLAO, CALLAO</cbc:Line>
+            </cac:AddressLine>
+            <cac:Country>
+               <cbc:IdentificationCode>PE</cbc:IdentificationCode>
+            </cac:Country>
+         </cac:OriginAddress>
+      </cac:Shipment>
+   </cac:Delivery>
+   <cac:PaymentTerms>
+      <cbc:ID>FormaPago</cbc:ID>
+      <cbc:PaymentMeansID>Credito</cbc:PaymentMeansID>
+      <cbc:Amount currencyID="PEN">140701.24</cbc:Amount>
+   </cac:PaymentTerms>
+   <cac:PaymentTerms>
+      <cbc:ID>FormaPago</cbc:ID>
+      <cbc:PaymentMeansID>Cuota001</cbc:PaymentMeansID>
+      <cbc:Amount currencyID="PEN">140701.24</cbc:Amount>
+      <cbc:PaymentDueDate>2024-09-14</cbc:PaymentDueDate>
+   </cac:PaymentTerms>
+   <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">21462.90</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+         <cbc:TaxableAmount currencyID="PEN">119238.34</cbc:TaxableAmount>
+         <cbc:TaxAmount currencyID="PEN">21462.90</cbc:TaxAmount>
+         <cac:TaxCategory>
+            <cac:TaxScheme>
+               <cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5153">1000</cbc:ID>
+               <cbc:Name>IGV</cbc:Name>
+               <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+            </cac:TaxScheme>
+         </cac:TaxCategory>
+      </cac:TaxSubtotal>
+   </cac:TaxTotal>
+   <cac:LegalMonetaryTotal>
+      <cbc:LineExtensionAmount currencyID="PEN">119238.34</cbc:LineExtensionAmount>
+      <cbc:TaxInclusiveAmount currencyID="PEN">140701.24</cbc:TaxInclusiveAmount>
+      <cbc:PayableAmount currencyID="PEN">140701.24</cbc:PayableAmount>
+   </cac:LegalMonetaryTotal>
+   <cac:InvoiceLine>
+      <cbc:ID>1</cbc:ID>
+      <cbc:Note>GL</cbc:Note>
+      <cbc:InvoicedQuantity unitCode="ZZ" unitCodeListAgencyName="United Nations Economic Commission for Europe" unitCodeListID="UN/ECE rec 20">10600.000</cbc:InvoicedQuantity>
+      <cbc:LineExtensionAmount currencyID="PEN">119238.34</cbc:LineExtensionAmount>
+      <cac:BillingReference>
+         <cac:BillingReferenceLine>
+            <cbc:ID schemeID="AN">67.4</cbc:ID>
+         </cac:BillingReferenceLine>
+         <cac:BillingReferenceLine>
+            <cbc:ID schemeID="AO">37</cbc:ID>
+         </cac:BillingReferenceLine>
+         <cac:BillingReferenceLine>
+            <cbc:ID schemeID="AA">140701.24</cbc:ID>
+         </cac:BillingReferenceLine>
+      </cac:BillingReference>
+      <cac:PricingReference>
+         <cac:AlternativeConditionPrice>
+            <cbc:PriceAmount currencyID="PEN">13.27</cbc:PriceAmount>
+            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+         </cac:AlternativeConditionPrice>
+      </cac:PricingReference>
+      <cac:AllowanceCharge>
+         <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+         <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">00</cbc:AllowanceChargeReasonCode>
+         <cbc:MultiplierFactorNumeric>2.98</cbc:MultiplierFactorNumeric>
+         <cbc:Amount currencyID="PEN">31588.00</cbc:Amount>
+         <cbc:BaseAmount currencyID="PEN">10600</cbc:BaseAmount>
+      </cac:AllowanceCharge>
+      <cac:TaxTotal>
+         <cbc:TaxAmount currencyID="PEN">21462.90</cbc:TaxAmount>
+         <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="PEN">119238.34</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="PEN">21462.90</cbc:TaxAmount>
+            <cac:TaxCategory>
+               <cbc:Percent>18.00</cbc:Percent>
+               <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+               <cac:TaxScheme>
+                  <cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5153">1000</cbc:ID>
+                  <cbc:Name>IGV</cbc:Name>
+                  <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+               </cac:TaxScheme>
+            </cac:TaxCategory>
+         </cac:TaxSubtotal>
+      </cac:TaxTotal>
+      <cac:Item>
+         <cbc:Description>DIESEL B5 S-50</cbc:Description>
+      </cac:Item>
+      <cac:Price>
+         <cbc:PriceAmount currencyID="PEN">14.2289</cbc:PriceAmount>
+      </cac:Price>
+   </cac:InvoiceLine>
+</Invoice>
