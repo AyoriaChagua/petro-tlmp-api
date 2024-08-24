@@ -7,7 +7,7 @@ export class ApprovalPersonnel {
     @PrimaryGeneratedColumn({ name: 'ID_PERSONAL_APRUEBA', type: 'int' })
     id: number;
 
-    @Column({ name: 'DESCRIPCION', type: 'varchar', length: 20, nullable: true })
+    @Column({ name: 'DESCRIPCION', type: 'varchar', length: 50, nullable: true })
     description: string;
 
     @Column({ name: 'TELEFONO', type: 'varchar', length: 9, nullable: true })
@@ -16,7 +16,7 @@ export class ApprovalPersonnel {
     @Column({ name: 'USUARIO_SISTEMA', type: 'nchar', length: 20, nullable: true })
     systemUser: string;
 
-    @Column({ name: 'FECHA_SISTEMA', type: 'datetime2', nullable: true })
+    @Column({ name: 'FECHA_SISTEMA', type: 'datetime2', nullable: true, default: 'getdate()' })
     systemDate: Date;
 
     @Column({ name: 'USUARIO_MOD', type: 'nchar', length: 20, nullable: true })
