@@ -1,6 +1,7 @@
-import { Controller, Post, Get, Param, Body } from '@nestjs/common';
+import { Controller, Post, Get, Param, Body, UseGuards } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { Role } from './role.entity';
+import { JwtAuthGuard } from '../auth/jwt.guard';
 
 @Controller('roles')
 export class RoleController {
@@ -8,9 +9,11 @@ export class RoleController {
 
     @Post()
     async createRole(@Body('description') description: string): Promise<Role> {
+        console.log("aca?")
         return this.roleService.createRole(description);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get()
     async getAllRoles(): Promise<Role[]> {
         return this.roleService.findAllRoles();

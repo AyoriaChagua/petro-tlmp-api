@@ -12,6 +12,9 @@ export class User {
     @Column({ name: 'PASSWORD_HASH', type: 'nvarchar', length: 255 })
     passwordHash: string;
 
+    @Column({ name: 'FLAG_ACTIVO', type: 'bit', default: true })
+    isActive: boolean;
+
     @CreateDateColumn({ name: 'FECHA_SISTEMA', type: 'date', default: () => 'GETDATE()' })
     systemDate: Date;
 

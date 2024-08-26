@@ -1,19 +1,22 @@
 import { IsString, IsOptional, IsInt, IsDate, IsBoolean } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class CreateSunatDocumentTypeDto {
-    @IsString()
-    documentTypeId: string;
+export class UpdateSunatDocumentTypeDto {
 
     @IsOptional()
     @IsString()
-    sunatCode?: string;
+    sunatCode: string;
 
     @IsOptional()
     @IsString()
-    systemUser?: string;
+    modifiedUser: string;
 
     @IsOptional()
     @IsString()
     description?: string;
+
+    @IsOptional()
+    @IsDate()
+    modifiedDate?: Date;
+
 }

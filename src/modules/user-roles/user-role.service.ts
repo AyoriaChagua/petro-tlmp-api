@@ -8,7 +8,7 @@ export class UserRolesService {
   constructor(
     @InjectRepository(UserRole)
     private readonly userRolesRepository: Repository<UserRole>,
-  ) {}
+  ) { }
 
   async findAll(): Promise<UserRole[]> {
     return this.userRolesRepository.find({ relations: ['role', 'user'] });
@@ -21,13 +21,15 @@ export class UserRolesService {
     });
   }
 
-  async create(userRole: UserRole): Promise<UserRole> {
-    return this.userRolesRepository.save(userRole);
+  async create(userRole: Partial<UserRole>[]): Promise<UserRole[]> {
+    const newUserRoles = this.userRolesRepository.create(userRole);
+    return this.userRolesRepository.save(newUserRoles);
   }
 
-  async update(roleId: number, userId: string, userRole: Partial<UserRole>): Promise<UserRole> {
-    await this.userRolesRepository.update({ roleId, userId }, userRole);
-    return this.findOne(roleId, userId);
+  async update(userId: string, userRole: Partial<UserRole>[]): Promise<UserRole[]> {
+    await this.userRolesRepository.delete({ userId });
+    const newUserRoles = this.userRolesRepository.create(userRole);
+    return this.userRolesRepository.save(newUserRoles);
   }
 
   async remove(roleId: number, userId: string): Promise<void> {

@@ -6,11 +6,8 @@ export class SunatDocumentType {
     @PrimaryColumn({ name: 'ID_TIPO_DOC_MP', type: 'varchar', length: 4 })
     documentTypeId: string;
 
-    @Column({ name: 'CIA', type: 'varchar', length: 5 })
-    companyId: string;
-
-    @Column({ name: 'ID_ESTADO', type: 'varchar', length: 5, nullable: true })
-    statusId?: string;
+    @Column({ name: 'FLAG_ACTIVO', type: 'bit', default: true })
+    isActive?: boolean;
 
     @Column({ name: 'CodigoSunat', type: 'varchar', length: 3, nullable: true })
     sunatCode?: string;

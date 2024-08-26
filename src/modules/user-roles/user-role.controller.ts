@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
 import { UserRolesService } from './user-role.service';
 import { UserRole } from './user-role.entity';
+import { JwtAuthGuard } from '../auth/jwt.guard';
 
 @Controller('user-roles')
 export class UserRolesController {
@@ -16,18 +17,18 @@ export class UserRolesController {
         return this.userRolesService.findOne(roleId, userId);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post()
-    async create(@Body() userRole: UserRole): Promise<UserRole> {
+    async create(@Body() userRole: Partial<UserRole>[]): Promise<UserRole[]> {
         return this.userRolesService.create(userRole);
     }
 
-    @Put(':roleId/:userId')
+    @Put(':userId')
     async update(
-        @Param('roleId') roleId: number,
         @Param('userId') userId: string,
-        @Body() userRole: Partial<UserRole>,
-    ): Promise<UserRole> {
-        return this.userRolesService.update(roleId, userId, userRole);
+        @Body() userRole: Partial<UserRole[]>,
+    ): Promise<UserRole[]> {
+        return this.userRolesService.update(userId, userRole);
     }
 
     @Delete(':roleId/:userId')
