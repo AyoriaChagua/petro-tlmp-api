@@ -24,13 +24,7 @@ export class CreateOrderMPDto {
 
     @IsDate()
     @Type(() => Date)
-    @IsOptional()
-    date?: Date;
-
-    @IsDate()
-    @Type(() => Date)
-    @IsOptional()
-    emissionDate?: Date;
+    orderDate: Date;
 
     @IsInt()
     @IsOptional()
@@ -45,35 +39,50 @@ export class CreateOrderMPDto {
     paymentMethod?: string;
 
     @IsString()
-    @IsOptional()
-    relevance?: string;
-
-    @IsString()
     currency?: string;
 
     @IsString()
-    @IsOptional()
-    documentStatusId?: string;
+    observations?: string;
 
     @IsBoolean()
     @IsOptional()
-    taxableIgv?: boolean;
+    isAffectedIGV?: boolean;
 
     @IsDecimal({ decimal_digits: '3' })
     @IsOptional()
-    retentionPercentage?: number;
+    retention?: number | null;
 
     @IsDecimal({ decimal_digits: '3' })
     @IsOptional()
-    taxPercentage?: number;
+    tax?: number | null;
 
     @IsDecimal({ decimal_digits: '3' })
     @IsOptional()
-    perceptionPercentage?: number;
+    perception?: number | null;
 
     @IsDecimal({ decimal_digits: '3' })
     @IsOptional()
-    detractionPercentage?: number;
+    detraction?: number | null;
+
+    @IsDecimal({ decimal_digits: '3' })
+    @IsOptional()
+    retentionCalc?: number | null;
+
+    @IsDecimal({ decimal_digits: '3' })
+    @IsOptional()
+    taxCalc?: number | null;
+
+    @IsDecimal({ decimal_digits: '3' })
+    @IsOptional()
+    perceptionCalc?: number | null;
+
+    @IsDecimal({ decimal_digits: '3' })
+    @IsOptional()
+    detractionCalc?: number | null;
+
+    @IsDecimal({ decimal_digits: '3' })
+    @IsOptional()
+    total?: number;
 
     @IsBoolean()
     @IsOptional()
@@ -81,15 +90,11 @@ export class CreateOrderMPDto {
 
     @IsDecimal({ decimal_digits: '3' })
     @IsOptional()
-    totalAmount?: number;
+    subtotal?: number;
 
     @IsInt()
     @IsOptional()
     requestingAreaId?: number;
-
-    @IsDecimal({ decimal_digits: '3' })
-    @IsOptional()
-    totalAmountWithTax?: number;
 
     @IsString()
     @IsOptional()

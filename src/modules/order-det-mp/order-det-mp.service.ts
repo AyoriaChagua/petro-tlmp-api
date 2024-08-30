@@ -11,11 +11,14 @@ export class OrderDetailService {
         private orderDetailRepository: Repository<OrderDetail>,
     ) { }
 
-    async create(createOrderDetailDto: CreateOrderDetailDto): Promise<OrderDetail> {
+
+    async create(orderDetails: CreateOrderDetailDto[]): Promise<void> {
         try {
-            const orderDetail = this.orderDetailRepository.create(createOrderDetailDto);
-            return await this.orderDetailRepository.save(orderDetail);
+            const newDetails = this.orderDetailRepository.create(orderDetails);
+            await this.orderDetailRepository.save(newDetails);
+            return;
         } catch (error) {
+            console.log(error)
             throw new InternalServerErrorException('Error creating order detail');
         }
     }
@@ -47,11 +50,11 @@ export class OrderDetailService {
         try {
             const orderDetails = await this.orderDetailRepository.find({
                 where: {
-                    cia: companyId,
+                    companyId,
                     orderTypeId,
                     period,
                     correlative,
-                    deleted: false
+                    isActive: false
                 }
             });
             return orderDetails;
@@ -80,7 +83,7 @@ export class OrderDetailService {
                 throw new NotFoundException(`Order detail with id:${id} not found`);
             }
 
-            orderDetail.deleted = true;
+            orderDetail.isActive = true;
             await this.orderDetailRepository.save(orderDetail);
         } catch (error) {
             if (error instanceof NotFoundException) {

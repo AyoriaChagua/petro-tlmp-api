@@ -33,10 +33,10 @@ export class OrderMP {
     systemUser: string;
 
     @Column({ name: 'FECHA', type: 'date', default: () => 'getdate()' })
-    date: Date;
+    orderDate: Date;
 
     @Column({ name: 'EMISION', type: 'date', default: () => 'getdate()' })
-    emissionDate: Date;
+    issueDate: Date;
 
     @Column({ name: 'ID_PERSONAL_APRUEBA', type: 'int', nullable: true })
     approvingStaffId: number;
@@ -50,8 +50,8 @@ export class OrderMP {
     @Column({ name: 'RELEVANCIA', type: 'varchar', length: 20, nullable: true })
     relevance: string;
 
-    @Column({ name: 'ID_ESTADO_DOC', type: 'varchar', length: 5, nullable: true, default: '01' })
-    documentStatusId: string;
+    @Column({ name: 'ESTADO_DOC', type: 'varchar', length: 20, nullable: true, default: 'ACTIVO' })
+    documentStatus: string;
 
     @Column({ name: 'MONEDA', type: 'varchar', length: 10, nullable: false, default: 'SOLES' })
     currency: string; 
@@ -60,19 +60,31 @@ export class OrderMP {
     observations: string;
 
     @Column({ name: 'AFECTO_IGV', type: 'bit', nullable: true })
-    taxableIgv: boolean;
+    isAffectedIGV: boolean;
 
     @Column({ name: 'PORC_RETENCION', type: 'decimal', precision: 10, scale: 3, nullable: true })
-    retentionPercentage: number;
+    retention: number;
 
     @Column({ name: 'PORC_IMPUESTO', type: 'decimal', precision: 10, scale: 3, nullable: true })
-    taxPercentage: number;
+    tax: number;
 
     @Column({ name: 'PORC_PERCEPCION', type: 'decimal', precision: 10, scale: 3, nullable: true })
-    perceptionPercentage: number;
+    perception: number;
 
     @Column({ name: 'PORC_DETRACCION', type: 'decimal', precision: 10, scale: 3, nullable: true })
-    detractionPercentage: number;
+    detraction: number;
+
+    @Column({ name: 'CALC_RETENCION', type: 'decimal', precision: 10, scale: 3, nullable: true })
+    retentionCalc: number;
+
+    @Column({ name: 'CALC_IMPUESTO', type: 'decimal', precision: 10, scale: 3, nullable: true })
+    taxCalc: number;
+
+    @Column({ name: 'CALC_PERCEPCION', type: 'decimal', precision: 10, scale: 3, nullable: true })
+    perceptionCalc: number;
+
+    @Column({ name: 'CALC_DETRACCION', type: 'decimal', precision: 10, scale: 3, nullable: true })
+    detractionCalc: number;
 
     @Column({ name: 'FIRMA_AUTOMATICA', type: 'bit', nullable: true, default: () => '(1)' })
     automaticSignature: boolean;
@@ -86,14 +98,14 @@ export class OrderMP {
     @Column({ name: 'FECHA_SISTEMA', type: 'varchar', length: 50, nullable: true, default: () => 'getdate()' })
     systemDate: string;
 
-    @Column({ name: 'IMPORTE_TOTAL', type: 'decimal', precision: 10, scale: 3, nullable: true })
-    totalAmount: number;
+    @Column({ name: 'SUBTOTAL', type: 'decimal', precision: 10, scale: 3, nullable: true })
+    subtotal: number;
 
     @Column({ name: 'ID_AREA_SOLICITANTE', type: 'int', nullable: true })
     requestingAreaId: number;
 
-    @Column({ name: 'IMPORTE_TOTAL_CON_IMPUESTO', type: 'decimal', precision: 10, scale: 3, nullable: true })
-    totalAmountWithTax: number;
+    @Column({ name: 'TOTAL', type: 'decimal', precision: 10, scale: 3, nullable: true })
+    total: number;
 
 
     @ManyToOne(() => CorrelativeControl)

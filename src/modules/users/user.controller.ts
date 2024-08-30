@@ -45,6 +45,19 @@ export class UserController {
     }
 
     @UseGuards(JwtAuthGuard)
+    @Patch('change-password-by-user/:userId')
+    async changePasswordByUser(
+        @Param('userId') userId: string,
+        @Body('newPassword') newPassword: string,
+        @Body('oldPassword') oldPassword: string
+    ): Promise<void> {
+        const result = await this.userService.changePassword(userId, oldPassword, newPassword);
+        if (result === null) {
+            throw new UnauthorizedException('Could not change password');
+        }
+    }
+
+    @UseGuards(JwtAuthGuard)
     @Patch(':id')
     async updateUser(
         @Param('id') id: string,

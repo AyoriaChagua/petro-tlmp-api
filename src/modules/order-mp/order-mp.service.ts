@@ -72,15 +72,15 @@ export class OrderMPService {
             const orderDto: GetOrderDocumentDto = {
                 correlative: order.correlative,
                 orderTypeId: order.orderTypeId,
-                date: order.date,
+                orderDate: order.orderDate,
                 companyId: order.companyId,
-                totalAmount: order.totalAmount,
+                subtotal: order.subtotal,
                 systemUser: order.systemUser,
                 observations: order.observations,
                 providerRuc: order.providerRuc,
                 providerDescription: order.supplier?.description,
                 currency: order.currency,
-                totalAmountWithTax: order.totalAmountWithTax,
+                total: order.total,
                 products: await this.findOrderDetail(order.companyId, order.orderTypeId, order.period, order.correlative),
                 documents: [],
             };
@@ -101,7 +101,7 @@ export class OrderMPService {
                     orderTypeId: document.orderTypeId,
                     systemUser: document.systemUser,
                     date: document.date,
-                    documentStatusId: document.documentStatus,
+                    documentStatus: document.documentStatus,
                     annotation: document.annotation,
                     sunatCode: document.documentType?.description,
                     invoiceFile: files.find(f => f.fileTypeId === 'AF'),
@@ -119,10 +119,10 @@ export class OrderMPService {
     }
 
 
-    private async findOrderDetail(cia: string, orderTypeId: string, period: string, correlative: string): Promise<string> {
+    private async findOrderDetail(companyId: string, orderTypeId: string, period: string, correlative: string): Promise<string> {
         const details = await this.orderDetailRepository.find({
             where: {
-                cia,
+                companyId,
                 orderTypeId,
                 period,
                 correlative,
@@ -189,7 +189,7 @@ export class OrderMPService {
                 orderTypeId: newOrderTypeId,
                 period: newPeriod,
                 correlative: nextCorrelative,
-                emissionDate: new Date()
+                issueDate: new Date()
             });
             const saveOrder = await this.orderMPRepository.save(newOrder);
             if(saveOrder) await this.correlativeControlService.updateCorrelative(newCompanyId, newOrderTypeId, newPeriod, nextCorrelative);
@@ -219,10 +219,10 @@ export class OrderMPService {
             if (!order) {
                 throw new NotFoundException(`Order not found`);
             }
-            order.totalAmount = amount;
-            order.totalAmountWithTax = order.taxPercentage === 8.000
+            order.subtotal = amount;
+            order.total = order.tax === 8.000
                 ? amount
-                : amount + (amount * (order.taxPercentage / 100));
+                : amount + (amount * (order.tax / 100));
             await this.orderMPRepository.save(order);
             return true;
         } catch (error) {

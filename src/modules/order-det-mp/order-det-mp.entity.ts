@@ -31,14 +31,14 @@ export class OrderDetail {
     modifiedDate: Date;
 
 
-    @Column({ name: 'ELIMINADO', type: 'bit', default: false })
-    deleted: boolean;
+    @Column({ name: 'FLAG_ACTIVO', type: 'bit', default: false })
+    isActive: boolean;
 
     @Column({ name: 'MEDIDA', type: 'varchar', length: 20, nullable: true })
     measurement: string;
 
     @Column({ name: 'CIA', type: 'varchar', length: 5 })
-    cia: string;
+    companyId: string;
 
     @Column({ name: 'ID_TIPO_ORDEN', type: 'nchar', length: 4 })
     orderTypeId: string;

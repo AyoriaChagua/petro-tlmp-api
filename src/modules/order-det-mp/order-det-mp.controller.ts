@@ -10,7 +10,7 @@ export class OrderDetailController {
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    async create(@Body() createOrderDetailDto: CreateOrderDetailDto) {
+    async create(@Body() createOrderDetailDto: CreateOrderDetailDto[]) {
         return await this.orderDetailService.create(createOrderDetailDto);
     }
 

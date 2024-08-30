@@ -80,7 +80,7 @@ export class UserService {
     return this.findUserById(id);
   }
 
-  async changePassword(id: string, oldPassword: string, newPassword: string): Promise<User | null> {
+  async changePassword(id: string, oldPassword: string, newPassword: string): Promise<void | null> {
     const user = await this.userRepository.findOne({
       where: { id }
     });
@@ -88,7 +88,7 @@ export class UserService {
       const passwordHash = await bcrypt.hash(newPassword, 10);
       user.passwordHash = passwordHash;
       await this.userRepository.save(user);
-      return user;
+      return;
     }
     return null;
   };

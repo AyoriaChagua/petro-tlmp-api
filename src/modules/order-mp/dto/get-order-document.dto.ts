@@ -16,7 +16,7 @@ export class OrderDocumentDto {
     orderTypeId: string;
     systemUser: string;
     date: Date;
-    documentStatusId: string;
+    documentStatus: string;
     annotation: string;
     sunatCode: string;
     
@@ -34,14 +34,14 @@ export class OrderDocumentDto {
 export class GetOrderDocumentDto {
     correlative: string;
     orderTypeId: string;
-    date: Date;
+    orderDate: Date;
     companyId: string;
-    totalAmount: number;
+    subtotal: number;
     systemUser: string;
     providerRuc: string;
     providerDescription: string;
     currency: string;
-    totalAmountWithTax: number;
+    total: number;
     products: string;
     observations: string;
     

@@ -36,10 +36,10 @@ export class GetFullOrderMPResponseDto {
     systemUser: string;
 
     @IsDate()
-    date: Date;
+    orderDate: Date;
 
     @IsDate()
-    emissionDate: Date;
+    issueDate: Date;
 
     @IsOptional()
     @IsInt()
@@ -61,8 +61,7 @@ export class GetFullOrderMPResponseDto {
 
     @IsOptional()
     @IsString()
-    @Length(5, 5)
-    documentStatusId: string;
+    documentStatus: string;
 
     @IsNotEmpty()
     @IsString()
@@ -71,23 +70,40 @@ export class GetFullOrderMPResponseDto {
 
     @IsOptional()
     @IsBoolean()
-    taxableIgv: boolean;
+    isAffectedIGV: boolean;
 
     @IsOptional()
     @IsDecimal({ decimal_digits: '3' })
-    retentionPercentage: number;
+    retention: number;
 
     @IsOptional()
     @IsDecimal({ decimal_digits: '3' })
-    taxPercentage: number;
+    tax: number;
 
     @IsOptional()
     @IsDecimal({ decimal_digits: '3' })
-    perceptionPercentage: number;
+    perception: number;
 
     @IsOptional()
     @IsDecimal({ decimal_digits: '3' })
-    detractionPercentage: number;
+    detraction: number;
+
+
+    @IsOptional()
+    @IsDecimal({ decimal_digits: '3' })
+    retentionCalc: number;
+
+    @IsOptional()
+    @IsDecimal({ decimal_digits: '3' })
+    taxCalc: number;
+
+    @IsOptional()
+    @IsDecimal({ decimal_digits: '3' })
+    perceptionCalc: number;
+
+    @IsOptional()
+    @IsDecimal({ decimal_digits: '3' })
+    detractionCalc: number;
 
     @IsOptional()
     @IsBoolean()
@@ -110,7 +126,7 @@ export class GetFullOrderMPResponseDto {
 
     @IsOptional()
     @IsDecimal({ decimal_digits: '3' })
-    totalAmount: number;
+    subtotal: number;
 
     @IsOptional()
     @IsInt()
@@ -118,7 +134,7 @@ export class GetFullOrderMPResponseDto {
 
     @IsOptional()
     @IsDecimal({ decimal_digits: '3' })
-    totalAmountWithTax: number;
+    total: number;
 
 
     @IsOptional()

@@ -16,10 +16,7 @@ export class CreateOrderDetailDto {
 
     @IsString()
     user: string;
-
-    @IsString()
-    observations: string;
-
+    
     @IsString()
     measurement: string;
 
