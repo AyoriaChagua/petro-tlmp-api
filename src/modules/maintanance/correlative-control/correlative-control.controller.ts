@@ -92,7 +92,6 @@ export class CorrelativeControlController {
         @Param('period') period: string
     ): Promise<void> {
         try {
-            console.log("llega")
             await this.correlativeControlService.deleteCorrelative(companyId, orderTypeId, period);
         } catch (error) {
             throw new HttpException(

@@ -10,6 +10,7 @@ import { UpdateOrderMPDto } from './dto/update-order-mp.dto';
 import { GetOrderDocumentDto, OrderDocumentDto } from './dto/get-order-document.dto';
 import { FileMP } from 'src/modules/file-mp/file-mp.entity';
 import { OrderDetail } from 'src/modules/order-det-mp/order-det-mp.entity';
+import { FilterFieldsDto } from './dto/filter-fields.dto';
 
 @Injectable()
 export class OrderMPService {
@@ -60,61 +61,92 @@ export class OrderMPService {
         return response;
     }
 
-    async getOrdersWithDocuments(cia: string, period: string): Promise<GetOrderDocumentDto[]> {
-        const orders = await this.orderMPRepository.find({
-            relations: ['supplier', 'orderDocument', 'orderDocument.documentType'],
-            where: { companyId: cia, period }
-        });
+    async getOrdersWithDocuments(filterFields: FilterFieldsDto): Promise<GetOrderDocumentDto[]> {
+        const queryBuilder = this.orderMPRepository.createQueryBuilder('order')
+            .leftJoinAndSelect('order.supplier', 'supplier')
+            .leftJoinAndSelect('order.orderDocument', 'orderDocument')
+            .leftJoinAndSelect('orderDocument.documentType', 'documentType')
+            .leftJoinAndSelect('order.costCenter', 'costCenter')
+            .where('order.companyId = :companyId', { companyId: filterFields.companyId })
+            .andWhere('order.orderDate BETWEEN :startDate AND :endDate', {
+                startDate: filterFields.startDate,
+                endDate: filterFields.endDate,
+            })
 
-        const result: GetOrderDocumentDto[] = [];
+        if (filterFields.orderTypeIds && filterFields.orderTypeIds.length > 0) {
+            queryBuilder.andWhere('order.orderTypeId IN (:...orderTypeIds)', { orderTypeIds: filterFields.orderTypeIds });
+        };
 
-        for (const order of orders) {
+        if (filterFields.documentTypeId) {
+            queryBuilder.andWhere('documentType.documentTypeId = :documentTypeId', { documentTypeId: filterFields.documentTypeId });
+        };
+
+        if (filterFields.orderNumber) {
+            queryBuilder.andWhere('order.correlative = :orderNumber', { orderNumber: filterFields.orderNumber });
+        };
+
+        if (filterFields.supplierRuc) {
+            queryBuilder.andWhere('order.providerRuc = :supplierRuc', { supplierRuc: filterFields.supplierRuc });
+        };
+
+        if (filterFields.minAmount) {
+            queryBuilder.andWhere('order.total >= :minAmount', { minAmount: filterFields.minAmount });
+        }
+
+        if (filterFields.maxAmount) {
+            queryBuilder.andWhere('order.total <= :maxAmount', { maxAmount: filterFields.maxAmount });
+        }
+
+        const orders = await queryBuilder.getMany();
+
+        const result: GetOrderDocumentDto[] = await Promise.all(orders.map(async (order) => {
             const orderDto: GetOrderDocumentDto = {
                 correlative: order.correlative,
                 orderTypeId: order.orderTypeId,
                 orderDate: order.orderDate,
                 companyId: order.companyId,
-                subtotal: order.subtotal,
                 systemUser: order.systemUser,
                 observations: order.observations,
                 providerRuc: order.providerRuc,
                 providerDescription: order.supplier?.description,
+                costCenterId: order.costCenter?.id,
+                costCenterDescription: order.costCenter?.description,
+                costcenterAlias: order.costCenter?.aliasReport,
                 currency: order.currency,
                 total: order.total,
                 products: await this.findOrderDetail(order.companyId, order.orderTypeId, order.period, order.correlative),
-                documents: [],
+                documents: await Promise.all((order.orderDocument || []).map(async (document) => {
+                    const files = await this.fileMPRepository.find({
+                        where: {
+                            orderDocumentNumber: document.orderDocumentNumber,
+                            companyId: order.companyId
+                        }
+                    });
+
+                    return {
+                        orderDocumentNumber: document.orderDocumentNumber,
+                        subtotal: document.subtotal,
+                        total: document.total,
+                        cia: document.companyId,
+                        correlative: document.correlative,
+                        period: document.period,
+                        orderTypeId: document.orderTypeId,
+                        systemUser: document.systemUser,
+                        date: document.date,
+                        documentStatus: document.documentStatus,
+                        annotation: document.annotation,
+                        sunatCode: document.documentType?.sunatCode,
+                        retentionCalc: document.retentionCalc,
+                        taxCalc: document.taxCalc,
+                        invoiceFile: files.find(f => f.fileTypeId === 'AF'),
+                        paymentFile: files.find(f => f.fileTypeId === 'AP'),
+                        otherFile: files.find(f => f.fileTypeId === 'OA'),
+                    } as OrderDocumentDto;
+                })),
             };
-            const documents = order.orderDocument || [];
-            for (const document of documents) {
-                const files = await this.fileMPRepository.find({
-                    where: { orderDocumentNumber: document.orderDocumentNumber, companyId: order.companyId },
-                });
 
-                const documentDto: OrderDocumentDto = {
-                    orderDocumentNumber: document.orderDocumentNumber,
-                    subtotal: document.subtotal,
-                    igv: document.igv,
-                    total: document.total,
-                    cia: document.companyId,
-                    correlative: document.correlative,
-                    period: document.period,
-                    orderTypeId: document.orderTypeId,
-                    systemUser: document.systemUser,
-                    date: document.date,
-                    documentStatus: document.documentStatus,
-                    annotation: document.annotation,
-                    sunatCode: document.documentType?.description,
-                    invoiceFile: files.find(f => f.fileTypeId === 'AF'),
-                    paymentFile: files.find(f => f.fileTypeId === 'AP'),
-                    otherFile: files.find(f => f.fileTypeId === 'OA'),
-                };
-
-                orderDto.documents.push(documentDto);
-            }
-
-            result.push(orderDto);
-        }
-
+            return orderDto;
+        }));
         return result;
     }
 
@@ -129,7 +161,6 @@ export class OrderMPService {
             },
             select: ['product']
         });
-        console.log(details)
         return details.map(det => det.product)?.join(' ||| ');
     }
 
@@ -192,7 +223,7 @@ export class OrderMPService {
                 issueDate: new Date()
             });
             const saveOrder = await this.orderMPRepository.save(newOrder);
-            if(saveOrder) await this.correlativeControlService.updateCorrelative(newCompanyId, newOrderTypeId, newPeriod, nextCorrelative);
+            if (saveOrder) await this.correlativeControlService.updateCorrelative(newCompanyId, newOrderTypeId, newPeriod, nextCorrelative);
             return saveOrder;
         } catch (error) {
             if (error instanceof NotFoundException) {

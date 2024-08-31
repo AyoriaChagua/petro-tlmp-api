@@ -63,7 +63,6 @@ export class FileMPController {
             // createFileMPDto.file = file.buffer;
             // createFileMPDto.fileName = file.originalname;
         } else {
-            console.log("sin archivos... y sin ella 😖")
             createFileMPDto.file = null;
             createFileMPDto.fileName = null;
         }

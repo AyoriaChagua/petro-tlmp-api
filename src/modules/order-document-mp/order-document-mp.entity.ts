@@ -14,9 +14,6 @@ export class OrderDocumentMP {
     @Column({ name: 'SUBTOTAL', type: 'decimal', precision: 10, scale: 3, nullable: true })
     subtotal: number;
 
-    @Column({ name: 'IGV', type: 'decimal', precision: 10, scale: 3, nullable: true })
-    igv: number;
-
     @Column({ name: 'TOTAL', type: 'decimal', precision: 10, scale: 3, nullable: true })
     total: number;
 
@@ -82,16 +79,33 @@ export class OrderDocumentMP {
     correlative: string;
 
     @Column({ name: 'PORC_RETENCION', type: 'decimal', precision: 8, scale: 2, nullable: true })
-    retentionPercentage: number;
+    retentionPerc: number;
 
     @Column({ name: 'PORC_IMPUESTO', type: 'decimal', precision: 8, scale: 2, nullable: true })
-    taxPercentage: number;
+    taxPerc: number;
 
     @Column({ name: 'PORC_PERCEPCION', type: 'decimal', precision: 8, scale: 2, nullable: true })
-    perceptionPercentage: number;
+    perceptionPerc: number;
 
     @Column({ name: 'PORC_DETRACCION', type: 'decimal', precision: 8, scale: 2, nullable: true })
-    detractionPercentage: number;
+    detractionPerc: number;
+
+
+    @Column({ name: 'CALC_RETENCION', type: 'decimal', precision: 8, scale: 2, nullable: true })
+    retentionCalc: number;
+
+    @Column({ name: 'CALC_IMPUESTO', type: 'decimal', precision: 8, scale: 2, nullable: true })
+    taxCalc: number;
+
+    @Column({ name: 'CALC_PERCEPCION', type: 'decimal', precision: 8, scale: 2, nullable: true })
+    perceptionCalc: number;
+
+    @Column({ name: 'CALC_DETRACCION', type: 'decimal', precision: 8, scale: 2, nullable: true })
+    detractionCalc: number;
+
+    
+    @Column({ name: 'FLAG_CAJA_CHICA', type: 'bit', default: false })
+    isPettyCash: boolean;
 
     @ManyToOne(() => OrderMP)
     @JoinColumn([

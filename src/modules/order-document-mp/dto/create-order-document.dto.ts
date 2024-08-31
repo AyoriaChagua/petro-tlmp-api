@@ -21,9 +21,6 @@ export class CreateDocumentOrderDto {
     subtotal?: number;
 
     @IsDecimal({ decimal_digits: '3' })
-    igv?: number;
-
-    @IsDecimal({ decimal_digits: '3' })
     total?: number;
 
     @IsString()
@@ -72,14 +69,28 @@ export class CreateDocumentOrderDto {
     noOrderFlag: boolean;
 
     @IsDecimal({ decimal_digits: '3' })
-    retentionPercentage: number;
+    retentionPerc: number;
 
     @IsDecimal({ decimal_digits: '3' })
-    taxPercentage: number;
+    taxPerc: number;
 
     @IsDecimal({ decimal_digits: '3' })
-    perceptionPercentage: number;
+    perceptionPerc: number;
 
     @IsDecimal({ decimal_digits: '3' })
-    detractionPercentage: number;
+    detractionPerc: number;
+
+    @IsDecimal({ decimal_digits: '3' })
+    retentionCalc: number;
+
+    @IsDecimal({ decimal_digits: '3' })
+    taxCalc: number;
+
+    @IsDecimal({ decimal_digits: '3' })
+    perceptionCalc: number;
+
+    @IsDecimal({ decimal_digits: '3' })
+    detractionCalc: number;
+
+    isPettyCash: boolean;
 }

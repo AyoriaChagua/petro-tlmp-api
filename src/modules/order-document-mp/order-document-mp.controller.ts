@@ -7,6 +7,21 @@ import { OrderDocumentMP } from './order-document-mp.entity';
 export class OrderDocumentMPController {
     constructor(private readonly orderDocumentService: OrderDocumentMPService) { }
 
+    @Get(':orderDocumentNumber/:companyId')
+    async getOrderDocumentById(
+        @Param('orderDocumentNumber') orderDocumentNumber: string,
+        @Param('companyId') companyId: string
+    ): Promise<OrderDocumentMP> {
+        try {
+            return await this.orderDocumentService.getOrderDocumentById(orderDocumentNumber, companyId);
+        } catch (error) {
+            if (error.status === HttpStatus.NOT_FOUND) {
+                throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+            }
+            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @Post()
     async createOrderDocument(@Body() createDto: CreateDocumentOrderDto): Promise<OrderDocumentMP> {
         try {
@@ -32,18 +47,5 @@ export class OrderDocumentMPController {
         }
     }
 
-    @Get(':orderDocumentNumber/:companyId')
-    async getOrderDocumentById(
-        @Param('orderDocumentNumber') orderDocumentNumber: string,
-        @Param('companyId') companyId: string
-    ): Promise<OrderDocumentMP> {
-        try {
-            return await this.orderDocumentService.getOrderDocumentById(orderDocumentNumber, companyId);
-        } catch (error) {
-            if (error.status === HttpStatus.NOT_FOUND) {
-                throw new HttpException(error.message, HttpStatus.NOT_FOUND);
-            }
-            throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+
 }

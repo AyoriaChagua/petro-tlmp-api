@@ -18,7 +18,6 @@ export class OrderDetailService {
             await this.orderDetailRepository.save(newDetails);
             return;
         } catch (error) {
-            console.log(error)
             throw new InternalServerErrorException('Error creating order detail');
         }
     }

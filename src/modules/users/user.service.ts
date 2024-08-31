@@ -98,7 +98,6 @@ export class UserService {
       where: { id: changePassDto.userId }
     });
     if (changePassDto.roleId === 3) {
-      console.log("si es admin");
       const passwordHash = await bcrypt.hash(changePassDto.newPassword, 10);
       user.passwordHash = passwordHash;
       await this.userRepository.save(user);

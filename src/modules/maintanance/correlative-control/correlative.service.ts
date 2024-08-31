@@ -36,7 +36,6 @@ export class CorrelativeService {
     }
 
     async updateCorrelative(companyId: string, orderTypeId: string, period: string, newCorrelative: string): Promise<void> {
-        console.log("llega a actualizar")
         await this.correlativeControlRepository.update(
             { companyId, orderTypeId, period },
             { correlative: newCorrelative }
@@ -46,10 +45,7 @@ export class CorrelativeService {
     }
 
     getCorrelativeStream(companyId: string, orderTypeId: string, period: string): Observable<string> {
-        console.log("paramas: ", orderTypeId, period, companyId)
-        console.log("service 2")
         const currentValue = this.correlativeSubject.getValue();
-        console.log(currentValue);
         return this.correlativeSubject.pipe(
             map(update => {
                 if (update.companyId === companyId && update.orderTypeId === orderTypeId && update.period === period) {

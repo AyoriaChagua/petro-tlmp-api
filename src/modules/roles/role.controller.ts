@@ -9,7 +9,6 @@ export class RoleController {
 
     @Post()
     async createRole(@Body('description') description: string): Promise<Role> {
-        console.log("aca?")
         return this.roleService.createRole(description);
     }
 

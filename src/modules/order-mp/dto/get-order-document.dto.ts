@@ -8,7 +8,6 @@ export class FileDto {
 export class OrderDocumentDto {
     orderDocumentNumber: string;
     subtotal: number;
-    igv: number;
     total: number;
     cia: string;
     correlative: string;
@@ -19,6 +18,8 @@ export class OrderDocumentDto {
     documentStatus: string;
     annotation: string;
     sunatCode: string;
+    taxCalc: number;
+    retentionCalc: number;
     
 
     @Type(() => FileDto)
@@ -36,7 +37,6 @@ export class GetOrderDocumentDto {
     orderTypeId: string;
     orderDate: Date;
     companyId: string;
-    subtotal: number;
     systemUser: string;
     providerRuc: string;
     providerDescription: string;
@@ -44,7 +44,9 @@ export class GetOrderDocumentDto {
     total: number;
     products: string;
     observations: string;
-    
+    costcenterAlias: string | null;
+    costCenterDescription: string;
+    costCenterId: number;
     @Type(() => OrderDocumentDto)
     documents: OrderDocumentDto[];
 }
