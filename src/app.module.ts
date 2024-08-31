@@ -23,6 +23,7 @@ import { FileMPModule } from './modules/file-mp/file-mp.module';
 import { SharedModule } from './shared/shared.module';
 import { ProviderModule } from './modules/maintanance/provider/provider.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { PaymentDocumentModule } from './modules/document-payment/document-payment.module';
 
 @Module({
   imports: [
@@ -49,7 +50,8 @@ import { AuthModule } from './modules/auth/auth.module';
     OrderDetailModule,
     OrderDocumentMPModule,
     FileMPModule,
-    SharedModule
+    SharedModule,
+    PaymentDocumentModule
   ],
   controllers: [AppController],
   providers: [AppService],
