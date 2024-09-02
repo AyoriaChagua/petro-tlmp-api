@@ -1,11 +1,26 @@
-import { Controller, Get, Post, Put, Param, Body, HttpStatus, HttpException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Param, Body, HttpStatus, HttpException, UseGuards, Query, ValidationPipe } from '@nestjs/common';
 import { OrderDocumentMPService } from './order-document-mp.service';
 import { CreateDocumentOrderDto } from './dto/create-order-document.dto';
 import { OrderDocumentMP } from './order-document-mp.entity';
+import { JwtAuthGuard } from '../auth/jwt.guard';
+import { FilterFieldsDto } from './dto/filter-fields.dto';
+import { OrderDocumentDto } from './dto/get-order-document.dto';
 
 @Controller('order-documents')
 export class OrderDocumentMPController {
     constructor(private readonly orderDocumentService: OrderDocumentMPService) { }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('report')
+    async getOrdersWithDocuments(
+        @Query(new ValidationPipe({ transform: true })) query: FilterFieldsDto
+    ): Promise<OrderDocumentDto[]> {
+        try {
+            return await this.orderDocumentService.getDocumentReport(query);
+        } catch (error) {
+            throw new HttpException('Error getting orders with documents', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @Get(':orderDocumentNumber/:companyId')
     async getOrderDocumentById(
