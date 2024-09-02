@@ -46,6 +46,18 @@ export class PaymentDocumentService {
         }
     }
 
+    async findByDocument(companyId: string, orderDocumentNumber: string): Promise<PaymentDocumentMP[]> {
+        try {
+            const paymentDocument = await this.paymentDocumentRepository.find({ where: { companyId, orderDocumentNumber } });
+            if (!paymentDocument) {
+                throw new NotFoundException(`Payment document for company ${companyId} and document ${orderDocumentNumber} not found`);
+            }
+            return paymentDocument;
+        } catch (error) {
+            this.databaseErrorService.handleDatabaseError(error, 'Document payment');
+        }
+    }
+
     async update(id: number, updatePaymentDocumentDto: Partial<CreatePaymentDocumentDto>): Promise<PaymentDocumentMP> {
         try {
             const paymentDocument = await this.findOne(id);

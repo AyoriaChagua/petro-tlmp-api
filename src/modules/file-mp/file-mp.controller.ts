@@ -55,19 +55,12 @@ export class FileMPController {
     }))
     async create(@UploadedFile() file: Express.Multer.File, @Body() createFileMPDto: CreateFileMPDto) {
         if (file) {
-            // console.log("file.buffer", file.buffer)
-            // console.log("file.originalname", file.originalname)
             createFileMPDto.file = await fsPromises.readFile(file.path);
             createFileMPDto.fileName = file.originalname;
-
-            // createFileMPDto.file = file.buffer;
-            // createFileMPDto.fileName = file.originalname;
         } else {
             createFileMPDto.file = null;
             createFileMPDto.fileName = null;
         }
         return this.fileMPService.create(createFileMPDto);
     }
-
-
 }

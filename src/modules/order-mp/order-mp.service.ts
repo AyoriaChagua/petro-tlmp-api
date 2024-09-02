@@ -66,6 +66,7 @@ export class OrderMPService {
             .leftJoinAndSelect('order.supplier', 'supplier')
             .leftJoinAndSelect('order.orderDocument', 'orderDocument')
             .leftJoinAndSelect('orderDocument.documentType', 'documentType')
+            .leftJoinAndSelect('orderDocument.documentPayment', 'documentPayment')
             .leftJoinAndSelect('order.costCenter', 'costCenter')
             .where('order.companyId = :companyId', { companyId: filterFields.companyId })
             .andWhere('order.orderDate BETWEEN :startDate AND :endDate', {
@@ -104,6 +105,7 @@ export class OrderMPService {
                 correlative: order.correlative,
                 orderTypeId: order.orderTypeId,
                 orderDate: order.orderDate,
+                period: order.period,
                 companyId: order.companyId,
                 systemUser: order.systemUser,
                 observations: order.observations,
@@ -114,15 +116,22 @@ export class OrderMPService {
                 costcenterAlias: order.costCenter?.aliasReport,
                 currency: order.currency,
                 total: order.total,
+                detraction: order.detraction,
+                perception: order.perception,
+                retention: order.retention,
+                tax: order.tax,
+                isAffectedIGV: order.isAffectedIGV,
                 products: await this.findOrderDetail(order.companyId, order.orderTypeId, order.period, order.correlative),
                 documents: await Promise.all((order.orderDocument || []).map(async (document) => {
                     const files = await this.fileMPRepository.find({
                         where: {
                             orderDocumentNumber: document.orderDocumentNumber,
                             companyId: order.companyId
-                        }
+                        },
+                        select: ["id", "fileTypeId"]
                     });
 
+                 
                     return {
                         orderDocumentNumber: document.orderDocumentNumber,
                         subtotal: document.subtotal,
@@ -139,8 +148,25 @@ export class OrderMPService {
                         retentionCalc: document.retentionCalc,
                         taxCalc: document.taxCalc,
                         invoiceFile: files.find(f => f.fileTypeId === 'AF'),
-                        paymentFile: files.find(f => f.fileTypeId === 'AP'),
                         otherFile: files.find(f => f.fileTypeId === 'OA'),
+                        payments: await Promise.all((document.documentPayment || []).map(async (payment) => {
+                            const paymentFile = await this.fileMPRepository.findOne({
+                                where: {
+                                    paymentId: payment.paymentId,
+                                },
+                                select: ["id", "fileTypeId"]
+                            });
+                            return {
+                                companyId: payment.companyId,
+                                paymentDate: payment.paymentDate,
+                                paidAmount: payment.paidAmount,
+                                isActive: payment.isActive,
+                                orderDocumentNumber: payment.orderDocumentNumber,
+                                documentPaymentId: payment.paymentId,
+                                paymentFile: paymentFile,
+                                paymentId: payment.paymentId,
+                            }
+                        })) 
                     } as OrderDocumentDto;
                 })),
             };

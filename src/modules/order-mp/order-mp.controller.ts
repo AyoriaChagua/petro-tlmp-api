@@ -14,6 +14,7 @@ import { FilterFieldsDto } from './dto/filter-fields.dto';
 export class OrderMPController {
     constructor(private readonly orderMPService: OrderMPService) { }
 
+    @UseGuards(JwtAuthGuard)
     @Get(':companyId/:orderTypeId/:period/:correlative')
     async findById(
         @Param('companyId') companyId: string,
@@ -28,6 +29,7 @@ export class OrderMPController {
         }
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get('with-documents')
     async getOrdersWithDocuments(
         @Query(new ValidationPipe({transform: true})) query: FilterFieldsDto
@@ -39,6 +41,7 @@ export class OrderMPController {
         }
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post()
     async create(@Body() createOrderMPDto: CreateOrderMPDto): Promise<OrderMP> {
         try {
@@ -48,6 +51,7 @@ export class OrderMPController {
         }
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post('duplicate')
     async duplicateOrder(@Body() duplicateOrderMPDto: DuplicateOrderMPDto): Promise<OrderMP> {
         try {
@@ -57,6 +61,7 @@ export class OrderMPController {
         }
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put('update-total/:companyId/:orderTypeId/:period/:correlative')
     async updateTotal(
         @Param('companyId') companyId: string,
@@ -72,6 +77,7 @@ export class OrderMPController {
         }
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put(':companyId/:orderTypeId/:period/:correlative')
     async updateOrder(
         @Param('companyId') companyId: string,

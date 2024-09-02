@@ -5,6 +5,19 @@ export class FileDto {
     fileTypeId: string;
 }
 
+
+export class PaymentDto {
+    paymentId: number
+    orderDocumentNumber: string
+    companyId: string
+    paymentDate: Date
+    paidAmount: number
+    isActive: boolean
+    
+    @Type(() => FileDto)
+    paymentFile: FileDto;
+}
+
 export class OrderDocumentDto {
     orderDocumentNumber: string;
     subtotal: number;
@@ -21,21 +34,20 @@ export class OrderDocumentDto {
     taxCalc: number;
     retentionCalc: number;
     
-
     @Type(() => FileDto)
     invoiceFile: FileDto;
 
     @Type(() => FileDto)
-    paymentFile: FileDto;
-
-    @Type(() => FileDto)
     otherFile: FileDto;
+
+    payments: PaymentDto[]
 }
 
 export class GetOrderDocumentDto {
     correlative: string;
     orderTypeId: string;
     orderDate: Date;
+    period: string;
     companyId: string;
     systemUser: string;
     providerRuc: string;
@@ -47,6 +59,11 @@ export class GetOrderDocumentDto {
     costcenterAlias: string | null;
     costCenterDescription: string;
     costCenterId: number;
+    isAffectedIGV: boolean;
+    retention: number;
+    tax: number;
+    perception: number;
+    detraction: number;
     @Type(() => OrderDocumentDto)
     documents: OrderDocumentDto[];
 }

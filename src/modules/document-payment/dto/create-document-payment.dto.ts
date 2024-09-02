@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString, MaxLength } from 'class-validator';
+import { IsDate, IsNotEmpty, IsNumber, IsString, MaxLength } from 'class-validator';
 
 export class CreatePaymentDocumentDto {
     @IsNotEmpty()
@@ -18,4 +18,7 @@ export class CreatePaymentDocumentDto {
     @IsString()
     @MaxLength(20)
     systemUser?: string;
+
+    @IsDate()
+    paymentDate: Date;
 }
