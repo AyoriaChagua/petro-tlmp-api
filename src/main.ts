@@ -7,8 +7,8 @@ async function bootstrap() {
   const allowedOrigins = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
-    'http://192.168.1.12:4500',
-    'http://190.116.6.12:4500'
+    'http://192.168.1.12:3004',
+    'http://190.116.6.12:3004'
   ]
   app.enableCors({
     origin: (origin, callback) => {

@@ -107,6 +107,8 @@ export class OrderMP {
     @Column({ name: 'TOTAL', type: 'decimal', precision: 10, scale: 3, nullable: true })
     total: number;
 
+    @Column({ name: 'FLAG_CAJA_CHICA', type: 'bit', default: false })
+    isPettyCash: boolean;
 
     @ManyToOne(() => CorrelativeControl)
     @JoinColumn([

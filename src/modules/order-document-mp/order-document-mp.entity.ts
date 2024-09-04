@@ -104,10 +104,6 @@ export class OrderDocumentMP {
     @Column({ name: 'CALC_DETRACCION', type: 'decimal', precision: 8, scale: 2, nullable: true })
     detractionCalc: number;
 
-    
-    @Column({ name: 'FLAG_CAJA_CHICA', type: 'bit', default: false })
-    isPettyCash: boolean;
-
     @ManyToOne(() => OrderMP)
     @JoinColumn([
         { name: 'CIA', referencedColumnName: 'companyId' },

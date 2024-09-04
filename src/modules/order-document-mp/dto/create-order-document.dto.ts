@@ -91,6 +91,4 @@ export class CreateDocumentOrderDto {
 
     @IsDecimal({ decimal_digits: '3' })
     detractionCalc: number;
-
-    isPettyCash: boolean;
 }

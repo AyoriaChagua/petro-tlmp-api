@@ -88,6 +88,10 @@ export class CreateOrderMPDto {
     @IsOptional()
     automaticSignature?: boolean;
 
+    @IsBoolean()
+    @IsOptional()
+    isPettyCash?: boolean;
+
     @IsDecimal({ decimal_digits: '3' })
     @IsOptional()
     subtotal?: number;

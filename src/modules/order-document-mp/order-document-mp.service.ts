@@ -37,7 +37,7 @@ export class OrderDocumentMPService {
             };
 
             if (filterFields.isPettyCash) {
-                queryBuilder.andWhere('orderDocument.isPettyCash = :isPettyCash', { isPettyCash: filterFields.isPettyCash });
+                queryBuilder.andWhere('order.isPettyCash = :isPettyCash', { isPettyCash: filterFields.isPettyCash });
                 console.log(filterFields.isPettyCash)
             };
 
@@ -67,7 +67,7 @@ export class OrderDocumentMPService {
                 date: document.date,
                 total: document.total,
                 exchangeRate: document.exchangeRate,
-                documentTypeId: document.documentTypeId,
+                documentTypeId: document.documentType.sunatCode,
                 orderDocumentNumber: document.orderDocumentNumber,
                 dueDate: document.dueDate,
                 product: await this.findOrderDetail(document.order.companyId, document.order.orderTypeId, document.order.period, document.order.correlative),
