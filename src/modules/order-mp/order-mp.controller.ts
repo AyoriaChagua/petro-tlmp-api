@@ -47,6 +47,7 @@ export class OrderMPController {
         try {
             return await this.orderMPService.create(createOrderMPDto);
         } catch (error) {
+            console.log(error)
             throw new HttpException('Error creating order', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

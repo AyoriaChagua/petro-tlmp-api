@@ -25,7 +25,8 @@ export class OrderDocumentDto {
     costCenterId: number;
     costCenterAlias: string;
     correlative: string;
-    code: string;
+    documentProviderRuc: string;
+    documentDescriptionRuc: string;
     observations: string;
     chargeDate: Date;
     date: Date;
@@ -35,7 +36,8 @@ export class OrderDocumentDto {
     orderDocumentNumber: string;
     dueDate: Date;
     product: string;
-    biog: number
-    typeEmission: string
-    annotation: string
+    biog: number;
+    typeEmission: string;
+    annotation: string;
+    
 }

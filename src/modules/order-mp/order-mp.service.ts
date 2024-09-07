@@ -209,6 +209,7 @@ export class OrderMPService {
 
             return savedOrderMP;
         } catch (error) {
+            console.log(error)
             if (error.number === 2627 || error.number === 2601) {
                 throw new ConflictException('An order with the same primary key already exists.');
             }

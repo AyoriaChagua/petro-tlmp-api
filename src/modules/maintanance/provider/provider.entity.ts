@@ -1,6 +1,7 @@
 import { OrderMP } from 'src/modules/order-mp/order-mp.entity';
 import { ProviderAccount } from 'src/modules/maintanance/provider-account/provider-account.entity';
 import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { OrderDocumentMP } from 'src/modules/order-document-mp/order-document-mp.entity';
 
 @Entity({ name: 'PROVEEDOR_MP' })
 export class Provider {
@@ -42,4 +43,7 @@ export class Provider {
 
     @OneToMany(() => OrderMP, order => order.supplier)
     orders: OrderMP[];
+
+    @OneToMany(() => OrderDocumentMP, document => document.supplier)
+    orderDocuments: OrderDocumentMP[];
 }

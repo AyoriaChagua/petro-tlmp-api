@@ -5,6 +5,7 @@ import { OrderDocumentMP } from './order-document-mp.entity';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { FilterFieldsDto } from './dto/filter-fields.dto';
 import { OrderDocumentDto } from './dto/get-order-document.dto';
+import { getDocumentEditDto } from './dto/get-document-edit.dto';
 
 @Controller('order-documents')
 export class OrderDocumentMPController {
@@ -26,7 +27,7 @@ export class OrderDocumentMPController {
     async getOrderDocumentById(
         @Param('orderDocumentNumber') orderDocumentNumber: string,
         @Param('companyId') companyId: string
-    ): Promise<OrderDocumentMP> {
+    ): Promise<getDocumentEditDto> {
         try {
             return await this.orderDocumentService.getOrderDocumentById(orderDocumentNumber, companyId);
         } catch (error) {
@@ -42,6 +43,7 @@ export class OrderDocumentMPController {
         try {
             return await this.orderDocumentService.createOrderDocument(createDto);
         } catch (error) {
+            console.log(error)
             throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

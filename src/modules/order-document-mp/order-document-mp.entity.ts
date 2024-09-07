@@ -3,6 +3,7 @@ import { OrderMP } from 'src/modules/order-mp/order-mp.entity';
 import { SunatDocumentType } from 'src/modules/maintanance/sunat-document-type/sunat-document-type.entity';
 import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { PaymentDocumentMP } from '../document-payment/document-payment.entity';
+import { Provider } from '../maintanance/provider/provider.entity';
 
 @Entity({ name: 'DOCUMENTO_ORDEN_MP' })
 export class OrderDocumentMP {
@@ -44,9 +45,6 @@ export class OrderDocumentMP {
 
     @Column({ name: 'FECHA_CARGO', type: 'date', nullable: true })
     chargeDate: Date;
-
-    @Column({ name: 'CODIGO', type: 'varchar', length: 20, nullable: true })
-    code: string;
 
     @Column({ name: 'BIOG', type: 'decimal', precision: 8, scale: 2, nullable: true })
     biog: number;
@@ -104,6 +102,9 @@ export class OrderDocumentMP {
     @Column({ name: 'CALC_DETRACCION', type: 'decimal', precision: 8, scale: 2, nullable: true })
     detractionCalc: number;
 
+    @Column({ name: 'RUC_PROVEEDOR', type: 'nchar', length: 12, nullable: true })
+    providerRuc: string;
+
     @ManyToOne(() => OrderMP)
     @JoinColumn([
         { name: 'CIA', referencedColumnName: 'companyId' },
@@ -122,4 +123,8 @@ export class OrderDocumentMP {
 
     @OneToMany(() => PaymentDocumentMP, od => od.orderDocument)
     documentPayment: PaymentDocumentMP[];
+
+    @ManyToOne(() => Provider)
+    @JoinColumn({ name: 'RUC_PROVEEDOR', referencedColumnName: 'ruc', })
+    supplier: Provider;
 }

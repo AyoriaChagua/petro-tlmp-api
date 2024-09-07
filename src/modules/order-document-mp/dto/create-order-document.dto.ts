@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsBoolean, isBoolean, IsDate, IsDecimal, IsString } from "class-validator";
+import { IsBoolean, isBoolean, IsDate, IsDecimal, IsOptional, IsString } from "class-validator";
 
 export class CreateDocumentOrderDto {
     @IsString()
@@ -45,7 +45,8 @@ export class CreateDocumentOrderDto {
     documentTypeId: string;
 
     @IsString()
-    code: string;
+    @IsOptional()
+    providerRuc?: string;
 
     @IsString()
     biog: number;
