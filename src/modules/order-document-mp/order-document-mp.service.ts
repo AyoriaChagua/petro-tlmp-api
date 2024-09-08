@@ -38,13 +38,6 @@ export class OrderDocumentMPService {
                 queryBuilder.andWhere('documentType.documentTypeId = :documentTypeId', { documentTypeId: filterFields.documentTypeId });
             }
 
-            if (filterFields.isPettyCash) {
-                queryBuilder.andWhere('order.isPettyCash = :isPettyCash', { isPettyCash: filterFields.isPettyCash });
-            } else {
-                queryBuilder.orWhere('order.isPettyCash = :isPettyCash', { isPettyCash: 0});
-                queryBuilder.orWhere('order.isPettyCash = :isPettyCash', { isPettyCash: null })
-            }
-
             if (filterFields.supplierRuc) {
                 queryBuilder.andWhere('order.providerRuc = :supplierRuc', { supplierRuc: filterFields.supplierRuc });
             }
@@ -55,6 +48,12 @@ export class OrderDocumentMPService {
 
             if (filterFields.maxAmount) {
                 queryBuilder.andWhere('orderDocument.total <= :maxAmount', { maxAmount: filterFields.maxAmount });
+            }
+
+            if (filterFields.isPettyCash !== undefined) {
+                queryBuilder.andWhere('order.isPettyCash = :isPettyCash', { isPettyCash: filterFields.isPettyCash });
+            } else {
+                queryBuilder.andWhere('(order.isPettyCash = :isPettyCashFalse OR order.isPettyCash IS NULL)', { isPettyCashFalse: false });
             }
 
             const documents = await queryBuilder.getMany();

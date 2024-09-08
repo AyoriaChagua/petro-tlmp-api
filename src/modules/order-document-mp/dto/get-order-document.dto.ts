@@ -39,5 +39,6 @@ export class OrderDocumentDto {
     biog: number;
     typeEmission: string;
     annotation: string;
-    
+    taxCalc: number;
+    retentionCalc: number;
 }
