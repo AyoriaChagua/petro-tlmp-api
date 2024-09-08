@@ -40,6 +40,9 @@ export class OrderDocumentMPService {
 
             if (filterFields.isPettyCash) {
                 queryBuilder.andWhere('order.isPettyCash = :isPettyCash', { isPettyCash: filterFields.isPettyCash });
+            } else {
+                queryBuilder.orWhere('order.isPettyCash = :isPettyCash', { isPettyCash: 0});
+                queryBuilder.orWhere('order.isPettyCash = :isPettyCash', { isPettyCash: null })
             }
 
             if (filterFields.supplierRuc) {
