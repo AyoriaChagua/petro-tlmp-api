@@ -79,6 +79,8 @@ export class OrderDocumentMPService {
                 biog: document.biog,
                 typeEmission: document.typeEmission,
                 annotation: document.annotation,
+                taxCalc: document.taxCalc,
+                retentionCalc: document.retentionCalc
             })));
             return result;
         } catch (error) {
