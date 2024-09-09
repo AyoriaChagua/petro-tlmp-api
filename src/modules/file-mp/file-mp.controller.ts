@@ -35,12 +35,35 @@ export class FileMPController {
         }
     }
 
-    @Get(':orderDocumentNumber/:companyId')
+    @Get('by-document/:orderDocumentNumber/:companyId')
     async getByOrderDocumentAndCompany(
         @Param('orderDocumentNumber') orderDocumentNumber: string,
         @Param('companyId') companyId: string,
     ) {
         return this.fileMPService.getByOrderDocumentAndCompany(orderDocumentNumber, companyId);
+    }
+
+    @Get('by-order/:correlative/:orderTypeId/:period/:companyId')
+    async getByOrder(
+        @Param('correlative') correlative: string,
+        @Param('orderTypeId') orderTypeId: string,
+        @Param('period') period: string,
+        @Param('companyId') companyId: string,
+    ) {
+        return this.fileMPService.getByOrder(
+            correlative,
+            orderTypeId,
+            period,
+            companyId,
+        );
+    }
+
+    @Get('by-payment/:orderDocumentNumber/:companyId')
+    async getByDocumentPayment(
+        @Param('orderDocumentNumber') orderDocumentNumber: string,
+        @Param('companyId') companyId: string,
+    ) {
+        return this.fileMPService.getPaymentByDocument(orderDocumentNumber, companyId);
     }
 
     @Post()
