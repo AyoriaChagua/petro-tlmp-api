@@ -41,4 +41,13 @@ export class FileMPService {
         }
         return file;
     }
+
+    async deleteFile(id: number): Promise<void> {
+        const file = await this.fileMPRepository.findOne({ where: { id } });
+        if (!file) {
+            throw new NotFoundException('Archivo no encontrado');
+        }
+        await this.fileMPRepository.remove(file);
+    }
+
 }

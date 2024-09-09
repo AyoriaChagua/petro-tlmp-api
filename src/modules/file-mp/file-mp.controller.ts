@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Body, UseInterceptors, UploadedFile, Res, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, UseInterceptors, UploadedFile, Res, NotFoundException, Delete } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { FileMPService } from './file-mp.service';
@@ -62,5 +62,10 @@ export class FileMPController {
             createFileMPDto.fileName = null;
         }
         return this.fileMPService.create(createFileMPDto);
+    };
+
+    @Delete(':id')
+    async deleteFile(@Param('id') id: number) {
+        await this.fileMPService.deleteFile(id);
     }
 }

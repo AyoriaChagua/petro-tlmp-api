@@ -165,6 +165,7 @@ export class OrderMPService {
                                 documentPaymentId: payment.paymentId,
                                 paymentFile: paymentFile,
                                 paymentId: payment.paymentId,
+                                currency: payment.currency
                             }
                         })) 
                     } as OrderDocumentDto;

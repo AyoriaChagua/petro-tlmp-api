@@ -13,6 +13,7 @@ export class PaymentDto {
     paymentDate: Date
     paidAmount: number
     isActive: boolean
+    currency: string
     
     @Type(() => FileDto)
     paymentFile: FileDto;
