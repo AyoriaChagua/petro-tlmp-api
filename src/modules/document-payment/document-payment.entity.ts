@@ -19,6 +19,9 @@ export class PaymentDocumentMP {
     @Column({ name: "IMPORTE_PAGADO", type: "decimal", precision: 10, scale: 3 })
     paidAmount: number;
 
+    @Column({ name: 'MONEDA', type: 'varchar', length: 10, nullable: false, default: 'PEN' })
+    currency: string; 
+
     @Column({ name: 'USUARIO_SISTEMA', type: 'varchar', length: 20, nullable: true })
     systemUser: string;
 

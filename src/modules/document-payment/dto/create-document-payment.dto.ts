@@ -12,6 +12,11 @@ export class CreatePaymentDocumentDto {
     companyId: string;
 
     @IsNotEmpty()
+    @IsString()
+    @MaxLength(10)
+    currency: string;
+
+    @IsNotEmpty()
     @IsNumber()
     paidAmount: number;
 

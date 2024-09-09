@@ -65,7 +65,7 @@ export class OrderDocumentMPService {
                 costCenterAlias: document.order.costCenter.aliasReport,
                 correlative: document.order.correlative,
                 documentProviderRuc: document.providerRuc,
-                documentDescriptionRuc: document.supplier?.description,
+                documentProviderDescription: document.supplier?.description,
                 observations: document.order.observations,
                 chargeDate: document.chargeDate,
                 date: document.date,
