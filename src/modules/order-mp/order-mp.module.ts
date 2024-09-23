@@ -9,11 +9,13 @@ import { FileMP } from 'src/modules/file-mp/file-mp.entity';
 import { CorrelativeControl } from 'src/modules/maintanance/correlative-control/correlative-control.entity';
 import { DatabaseErrorService } from 'src/shared/database-error.service';
 import { OrderDocumentMP } from '../order-document-mp/order-document-mp.entity';
+import { OrderPdfGenerator } from 'src/utils/pdf-generators/order-pdf.generator';
+import { SharedModule } from 'src/shared/shared.module';
 
 @Module({
     controllers: [OrderMPController],
-    providers: [OrderMPService, CorrelativeControlService, DatabaseErrorService],
-    exports: [OrderMPService, DatabaseErrorService],
-    imports: [TypeOrmModule.forFeature([OrderMP, OrderDetail, OrderDocumentMP, FileMP, CorrelativeControl])],
+    providers: [OrderMPService, CorrelativeControlService, DatabaseErrorService, OrderPdfGenerator],
+    exports: [OrderMPService, DatabaseErrorService, OrderPdfGenerator],
+    imports: [TypeOrmModule.forFeature([OrderMP, OrderDetail, OrderDocumentMP, FileMP, CorrelativeControl]), SharedModule],
 })
 export class OrderMPModule { }

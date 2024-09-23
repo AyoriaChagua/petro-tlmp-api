@@ -42,6 +42,7 @@ export class SunatDocumentTypeService {
             const newDocumentType = this.sunatDocumentTypeRepository.create(createDto);
             return await this.sunatDocumentTypeRepository.save(newDocumentType);
         } catch (error) {
+            console.log(error)
             throw new Error(`Failed to create Sunat Document Type: ${error.message}`);
         }
     }

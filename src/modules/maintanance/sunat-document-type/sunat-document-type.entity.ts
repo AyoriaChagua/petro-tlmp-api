@@ -24,7 +24,7 @@ export class SunatDocumentType {
     @Column({ name: 'USUARIO_MOD', type: 'varchar', length: 20, nullable: true })
     modifiedUser?: string;
 
-    @Column({ name: 'Descripcion', type: 'varchar', length: 20, nullable: true })
+    @Column({ name: 'Descripcion', type: 'varchar', length: 50, nullable: true })
     description?: string;
 
     @Column({ name: 'FRECUENCIA', type: 'int', nullable: true })

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Param, Body, UseGuards, HttpException, HttpStatus, Query, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Put, Param, Body, UseGuards, HttpException, HttpStatus, Query, ValidationPipe, Res } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { OrderMPService } from './order-mp.service';
 import { GetFullOrderMPResponseDto } from './dto/get-full-order-mp-respose.dto';
@@ -8,11 +8,34 @@ import { OrderMP } from './order-mp.entity';
 import { DuplicateOrderMPDto } from './dto/duplicate-order-mp.dto';
 import { UpdateOrderMPDto } from './dto/update-order-mp.dto';
 import { FilterFieldsDto } from './dto/filter-fields.dto';
+import * as fs from 'fs';
+import { Response } from 'express';
 
 @Controller('order-mp')
 @UseGuards(JwtAuthGuard)
 export class OrderMPController {
-    constructor(private readonly orderMPService: OrderMPService) { }
+    constructor(
+        private readonly orderMPService: OrderMPService
+    ) { }
+
+
+    @Get('pdf')
+    async generatePdf(@Res() res: Response) {
+        try {
+            const [filePath, fileName] = await this.orderMPService.createPdfInOneFile();
+            res.setHeader('Content-type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=${fileName}.pdf`);
+            res.sendFile(filePath, { root: process.cwd() }, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+                fs.unlinkSync(filePath);
+            })
+        } catch (error) {
+            console.error('error', error);
+            throw error;
+        }
+    }
 
     @UseGuards(JwtAuthGuard)
     @Get(':companyId/:orderTypeId/:period/:correlative')
@@ -32,7 +55,7 @@ export class OrderMPController {
     @UseGuards(JwtAuthGuard)
     @Get('with-documents')
     async getOrdersWithDocuments(
-        @Query(new ValidationPipe({transform: true})) query: FilterFieldsDto
+        @Query(new ValidationPipe({ transform: true })) query: FilterFieldsDto
     ): Promise<GetOrderDocumentDto[]> {
         try {
             return await this.orderMPService.getOrdersWithDocuments(query);
