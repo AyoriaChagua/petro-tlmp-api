@@ -45,7 +45,7 @@ export interface Detail {
     product: string
     quantity: number
     unit: string
-    price: number
+    price: number | string
     discount: null
-    amount: number
+    amount: number | string
 }

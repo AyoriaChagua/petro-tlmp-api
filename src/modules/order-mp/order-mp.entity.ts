@@ -8,6 +8,7 @@ import { RequestingArea } from 'src/modules/maintanance/requesting-area/requesti
 import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Provider } from '../maintanance/provider/provider.entity';
 import { OrderDocumentMP } from '../order-document-mp/order-document-mp.entity';
+import { OrderPayment } from '../order-payment/order-payment.entity';
 
 @Entity({ name: 'ORDEN_MP' })
 export class OrderMP {
@@ -140,6 +141,9 @@ export class OrderMP {
 
     @OneToMany(() => OrderDocumentMP, od => od.order)
     orderDocument: OrderDocumentMP[];
+
+    @OneToMany(() => OrderPayment, od => od.order)
+    orderPayment: OrderPayment[];
 
     @OneToMany(() => FileMP, file => file.order)
     file: FileMP[];

@@ -11,6 +11,10 @@ export class CiaService {
     ) { }
 
     async findAll(): Promise<Cia[]> {
-        return await this.ciaRepository.find();
+        return await this.ciaRepository.find({ relations: ['address'] });
+    }
+
+    async findOne(companyId: string): Promise<Cia> {
+        return await this.ciaRepository.findOne({ where: { companyId }, relations: ["address"] });
     }
 }

@@ -58,13 +58,6 @@ export class FileMPController {
         );
     }
 
-    @Get('by-payment/:orderDocumentNumber/:companyId')
-    async getByDocumentPayment(
-        @Param('orderDocumentNumber') orderDocumentNumber: string,
-        @Param('companyId') companyId: string,
-    ) {
-        return this.fileMPService.getPaymentByDocument(orderDocumentNumber, companyId);
-    }
 
     @Post()
     @UseInterceptors(FileInterceptor('file', {

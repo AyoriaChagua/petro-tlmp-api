@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToOne } from 'typeorm';
+import { CiaAddress } from './cia-address.entity';
 
 @Entity({ name: 'CIA' })
 export class Cia {
@@ -9,5 +10,8 @@ export class Cia {
     description: string;
 
     @Column({ name: 'NRO_DI', type: 'varchar', length: 20, nullable: true })
-    documentNumber: string;
+    ruc: string;
+
+    @OneToOne(() => CiaAddress, ca => ca.cia)
+    address:  CiaAddress;
 }

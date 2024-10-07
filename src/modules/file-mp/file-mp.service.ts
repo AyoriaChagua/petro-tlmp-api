@@ -3,15 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FileMP } from './file-mp.entity';
 import { CreateFileMPDto } from './dto/create-file-mp.dto';
-import { PaymentDocumentService } from '../document-payment/document-payment.service';
-import { PaymentDocumentMP } from '../document-payment/document-payment.entity';
+import { OrderPaymentService } from '../order-payment/order-payment.service';
 
 @Injectable()
 export class FileMPService {
     constructor(
         @InjectRepository(FileMP)
         private fileMPRepository: Repository<FileMP>,
-        private documentPaymentService: PaymentDocumentService
+        private orderPaymentService: OrderPaymentService
     ) { }
 
     async getByOrderDocumentAndCompany(orderDocumentNumber: string, companyId: string): Promise<FileMP[]> {
@@ -36,21 +35,6 @@ export class FileMPService {
         return files;
     }
 
-    async getPaymentByDocument(orderDocumentNumber: string, companyId: string): Promise<FileMP[]> {
-        const payments = await this.documentPaymentService.findByDocument(companyId, orderDocumentNumber);
-        const files = await Promise.all(payments.map(async (payment) => {
-            const file = await this.fileMPRepository.findOne({
-                where: { paymentId: payment.paymentId },
-                select: ["fileTypeId", "fileName", "id"]
-            });
-            return file
-        }));
-        if (!files.length) {
-            throw new NotFoundException('Files not found for this payment document');
-        }
-        return files;
-        
-    }
 
     async create(createFileMPDto: CreateFileMPDto): Promise<FileMP> {
         const newFile = this.fileMPRepository.create(createFileMPDto);

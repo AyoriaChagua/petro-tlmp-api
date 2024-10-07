@@ -40,3 +40,14 @@ export class FilterFieldsDto {
     @Type(() => Number)
     maxAmount?: number;
 }
+
+export class FieldsPDF {
+    @IsString()
+    companyId: string;
+    @IsString()
+    orderTypeId: string;
+    @IsString()
+    period: string;
+    @IsString()
+    correlative: string;
+}

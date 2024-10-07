@@ -11,11 +11,13 @@ import { DatabaseErrorService } from 'src/shared/database-error.service';
 import { OrderDocumentMP } from '../order-document-mp/order-document-mp.entity';
 import { OrderPdfGenerator } from 'src/utils/pdf-generators/order-pdf.generator';
 import { SharedModule } from 'src/shared/shared.module';
+import { CiaService } from '../cia/cia.service';
+import { Cia } from '../cia/cia.entity';
 
 @Module({
     controllers: [OrderMPController],
-    providers: [OrderMPService, CorrelativeControlService, DatabaseErrorService, OrderPdfGenerator],
-    exports: [OrderMPService, DatabaseErrorService, OrderPdfGenerator],
-    imports: [TypeOrmModule.forFeature([OrderMP, OrderDetail, OrderDocumentMP, FileMP, CorrelativeControl]), SharedModule],
+    providers: [OrderMPService, CorrelativeControlService, CiaService, DatabaseErrorService, OrderPdfGenerator],
+    exports: [OrderMPService, DatabaseErrorService, OrderPdfGenerator, ],
+    imports: [TypeOrmModule.forFeature([OrderMP, OrderDetail, OrderDocumentMP, FileMP, CorrelativeControl, Cia]), SharedModule],
 })
 export class OrderMPModule { }

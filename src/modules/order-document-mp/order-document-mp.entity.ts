@@ -2,7 +2,6 @@ import { FileMP } from 'src/modules/file-mp/file-mp.entity';
 import { OrderMP } from 'src/modules/order-mp/order-mp.entity';
 import { SunatDocumentType } from 'src/modules/maintanance/sunat-document-type/sunat-document-type.entity';
 import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
-import { PaymentDocumentMP } from '../document-payment/document-payment.entity';
 import { Provider } from '../maintanance/provider/provider.entity';
 
 @Entity({ name: 'DOCUMENTO_ORDEN_MP' })
@@ -121,8 +120,6 @@ export class OrderDocumentMP {
     @OneToMany(() => FileMP, file => file.order)
     file: FileMP[];
 
-    @OneToMany(() => PaymentDocumentMP, od => od.orderDocument)
-    documentPayment: PaymentDocumentMP[];
 
     @ManyToOne(() => Provider)
     @JoinColumn({ name: 'RUC_PROVEEDOR', referencedColumnName: 'ruc', })

@@ -1,15 +1,17 @@
 import { IsDate, IsNotEmpty, IsNumber, IsString, MaxLength } from 'class-validator';
 
-export class CreatePaymentDocumentDto {
-    @IsNotEmpty()
+export class CreateOrderPaymentDto {
     @IsString()
-    @MaxLength(20)
-    orderDocumentNumber: string;
-
-    @IsNotEmpty()
-    @IsString()
-    @MaxLength(5)
     companyId: string;
+
+    @IsString()
+    orderTypeId: string;
+
+    @IsString()
+    period: string;
+
+    @IsString()
+    correlative: string;
 
     @IsNotEmpty()
     @IsString()

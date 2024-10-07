@@ -2,7 +2,7 @@ import { FileTypeOrder } from 'src/modules/maintanance/file-type-mp/file-type-mp
 import { OrderMP } from 'src/modules/order-mp/order-mp.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { OrderDocumentMP } from '../order-document-mp/order-document-mp.entity';
-import { PaymentDocumentMP } from '../document-payment/document-payment.entity';
+import { OrderPayment } from '../order-payment/order-payment.entity';
 
 @Entity({ name: 'ARCHIVOS_MP' })
 export class FileMP {
@@ -68,7 +68,7 @@ export class FileMP {
     ])
     orderDocument: OrderDocumentMP;
 
-    @ManyToOne(() => PaymentDocumentMP)
+    @ManyToOne(() => OrderPayment)
     @JoinColumn({ name: 'ID_PAGO', referencedColumnName: 'paymentId' })
-    documentPayment: PaymentDocumentMP;
+    orderPayment: OrderPayment;
 }

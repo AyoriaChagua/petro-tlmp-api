@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 import { Cia } from './cia.entity';
 
 @Entity({ name: 'CIA_DIRECCIONES' })
@@ -12,7 +12,7 @@ export class CiaAddress {
     @Column({ name: 'DESCRIPCION', type: 'varchar', length: 150, nullable: true })
     description: string;
 
-    @ManyToOne(() => Cia)
+    @OneToOne(() => Cia)
     @JoinColumn({ name: 'CIA', referencedColumnName: 'companyId' })
     cia: Cia;
 }

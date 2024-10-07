@@ -169,4 +169,8 @@ export class GetFullOrderMPResponseDto {
     @IsOptional()
     @IsString()
     requestingAreaDescription: string;
+
+    supplierAccountType: string;
+
+    orderDetail: any[]
 }

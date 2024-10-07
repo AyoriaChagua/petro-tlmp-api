@@ -8,7 +8,6 @@ export class FileDto {
 
 export class PaymentDto {
     paymentId: number
-    orderDocumentNumber: string
     companyId: string
     paymentDate: Date
     paidAmount: number
@@ -41,10 +40,10 @@ export class OrderDocumentDto {
     @Type(() => FileDto)
     otherFile: FileDto;
 
-    payments: PaymentDto[]
 }
 
 export class GetOrderDocumentDto {
+    payments: PaymentDto[]
     correlative: string;
     orderTypeId: string;
     orderDate: Date;

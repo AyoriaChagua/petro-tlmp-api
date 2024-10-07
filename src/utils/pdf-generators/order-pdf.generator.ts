@@ -213,13 +213,13 @@ export class OrderPdfGenerator {
             await this.pdfService.addNewLine(10);
 
             // detraction account
-            await this.pdfService.addText(`CTA. DETRACCION:`, {
+            await this.pdfService.addText(`CTA. DETRACCIÓN:`, {
                 fontSize: 7,
                 isBold: true,
                 x: 25
             });
 
-            await this.pdfService.addText(order.bank?.accountType === "DETRACCION" && order?.bank.account, {
+            await this.pdfService.addText((order.bank?.accountType === "DETRACCION") ? order?.bank.account : "", {
                 fontSize: 7,
                 x: 95
             });

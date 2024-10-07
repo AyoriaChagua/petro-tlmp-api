@@ -1,17 +1,23 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
-import { OrderDocumentMP } from "../order-document-mp/order-document-mp.entity";
 import { FileMP } from "../file-mp/file-mp.entity";
+import { OrderMP } from "../order-mp/order-mp.entity";
 
-@Entity({ name: "PAGO_DOCUMENTO_MP" })
-export class PaymentDocumentMP {
+@Entity({ name: "PAGO_ORDEN_MP" })
+export class OrderPayment {
     @PrimaryGeneratedColumn({ name: 'ID_PAGO' })
     paymentId: number;
-    
-    @Column({ name: "NRO_DOCUMENTO_ORDEN", type: "varchar", length: 20 })
-    orderDocumentNumber: string;
 
     @Column({ name: "CIA", type: "varchar", length: 5 })
     companyId: string;
+
+    @Column({ name: 'ID_TIPO_ORDEN', type: 'nchar', length: 4 })
+    orderTypeId: string;
+
+    @Column({ name: 'PERIODO', type: 'nchar', length: 4 })
+    period: string;
+
+    @Column({ name: 'CORRELATIVO', type: 'nvarchar', length: 8 })
+    correlative: string;
 
     @Column({ name: "FECHA_PAGO", type: "datetime" })
     paymentDate: Date;
@@ -31,12 +37,14 @@ export class PaymentDocumentMP {
     @Column({ name: 'FLAG_ACTIVO', type: 'bit', default: true })
     isActive: boolean;
 
-    @ManyToOne(() => OrderDocumentMP)
+    @ManyToOne(() => OrderMP)
     @JoinColumn([
         { name: 'CIA', referencedColumnName: 'companyId' },
-        { name: 'NRO_DOCUMENTO_ORDEN', referencedColumnName: 'orderDocumentNumber' }
+        { name: 'ID_TIPO_ORDEN', referencedColumnName: 'orderTypeId' },
+        { name: 'PERIODO', referencedColumnName: 'period' },
+        { name: 'CORRELATIVO', referencedColumnName: 'correlative' }
     ])
-    orderDocument: OrderDocumentMP;
+    order: OrderMP;
 
     @OneToMany(() => FileMP, file => file.order)
     file: FileMP[];

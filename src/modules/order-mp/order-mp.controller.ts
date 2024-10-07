@@ -7,7 +7,7 @@ import { CreateOrderMPDto } from './dto/create-order-mp.dto';
 import { OrderMP } from './order-mp.entity';
 import { DuplicateOrderMPDto } from './dto/duplicate-order-mp.dto';
 import { UpdateOrderMPDto } from './dto/update-order-mp.dto';
-import { FilterFieldsDto } from './dto/filter-fields.dto';
+import { FieldsPDF, FilterFieldsDto } from './dto/filter-fields.dto';
 import * as fs from 'fs';
 import { Response } from 'express';
 
@@ -20,9 +20,9 @@ export class OrderMPController {
 
 
     @Get('pdf')
-    async generatePdf(@Res() res: Response) {
+    async generatePdf(@Query(new ValidationPipe({ transform: true })) query: FieldsPDF, @Res() res: Response) {
         try {
-            const [filePath, fileName] = await this.orderMPService.createPdfInOneFile();
+            const [filePath, fileName] = await this.orderMPService.createPdfInOneFile(query);
             res.setHeader('Content-type', 'application/pdf');
             res.setHeader('Content-Disposition', `attachment; filename=${fileName}.pdf`);
             res.sendFile(filePath, { root: process.cwd() }, (err) => {
@@ -37,7 +37,7 @@ export class OrderMPController {
         }
     }
 
-    @UseGuards(JwtAuthGuard)
+/*    @UseGuards(JwtAuthGuard)
     @Get(':companyId/:orderTypeId/:period/:correlative')
     async findById(
         @Param('companyId') companyId: string,
@@ -50,7 +50,7 @@ export class OrderMPController {
         } catch (error) {
             throw new HttpException('Error finding order', HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
     @UseGuards(JwtAuthGuard)
     @Get('with-documents')
@@ -60,6 +60,7 @@ export class OrderMPController {
         try {
             return await this.orderMPService.getOrdersWithDocuments(query);
         } catch (error) {
+            console.log(error)
             throw new HttpException('Error getting orders with documents', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
