@@ -17,7 +17,6 @@ export class OrderPaymentService {
         try {
             const newPaymentDocument = this.orderPaymentRepository.create({
                 ...createOrderPaymentDto,
-                paymentDate: new Date(),
                 isActive: true,
                 systemDate: new Date()
             });
