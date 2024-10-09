@@ -5,7 +5,7 @@ import { CreateOrderPaymentDto } from './dto/create-order-payment.dto';
 import { OrderPayment } from './order-payment.entity';
 import { FieldsSearch } from './dto/query.dto';
 
-@Controller('payment-documents')
+@Controller('order-payment')
 export class PaymentDocumentController {
     constructor(private readonly orderPaymentService: OrderPaymentService) { }
 
@@ -17,13 +17,7 @@ export class PaymentDocumentController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
-    findAll(): Promise<OrderPayment[]> {
-        return this.orderPaymentService.findAll();
-    }
-
-    @UseGuards(JwtAuthGuard)
-    @Get('order')
-    async getOrdersWithDocuments(
+    async getPaymentsByOrder(
         @Query(new ValidationPipe({ transform: true })) query: FieldsSearch
     ): Promise<OrderPayment[]> {
         return await this.orderPaymentService.findByOrder(query);
