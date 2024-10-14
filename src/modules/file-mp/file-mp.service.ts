@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { FileMP } from './file-mp.entity';
 import { CreateFileMPDto } from './dto/create-file-mp.dto';
 import { OrderPaymentService } from '../order-payment/order-payment.service';
+import { SearchFiles } from './dto/file-response.dto';
 
 @Injectable()
 export class FileMPService {
@@ -24,9 +25,9 @@ export class FileMPService {
         return files;
     }
 
-    async getByOrder(correlative: string, orderTypeId: string, period: string, companyId: string): Promise<FileMP[]> {
+    async getByOrderAndType({companyId, correlative, fileTypeId, orderTypeId, period}: SearchFiles): Promise<FileMP[]> {
         const files = await this.fileMPRepository.find({
-            where: { correlative, companyId, orderTypeId, period },
+            where: { correlative, companyId, orderTypeId, period, fileTypeId },
             select: ["fileTypeId", "fileName", "id"]
         });
         if (!files.length) {

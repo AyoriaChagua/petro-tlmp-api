@@ -27,7 +27,6 @@ export class OrderDocumentMPService {
                 .leftJoinAndSelect('orderDocument.supplier', 'supplierDocument')
                 .leftJoinAndSelect('order.costCenter', 'costCenter')
                 .leftJoinAndSelect('orderDocument.documentType', 'documentType')
-                .leftJoinAndSelect('orderDocument.documentPayment', 'documentPayment')
                 .andWhere('orderDocument.companyId = :companyId', { companyId: filterFields.companyId })
                 .andWhere('orderDocument.date BETWEEN :startDate AND :endDate', {
                     startDate: filterFields.startDate,
@@ -107,7 +106,7 @@ export class OrderDocumentMPService {
         try {
             const orderDocument = await this.orderDocumentRepository.findOne({
                 where: { orderDocumentNumber, companyId },
-                relations: ['supplier', 'documentType', 'documentPayment']
+                relations: ['supplier', 'documentType']
             });
 
             if (!orderDocument) {

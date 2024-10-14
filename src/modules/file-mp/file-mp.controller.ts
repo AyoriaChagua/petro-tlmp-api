@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Param, Body, UseInterceptors, UploadedFile, Res, NotFoundException, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, UseInterceptors, UploadedFile, Res, NotFoundException, Delete, Query, ValidationPipe } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { FileMPService } from './file-mp.service';
 import { CreateFileMPDto } from './dto/create-file-mp.dto';
 import { diskStorage } from 'multer';
 import { promises as fsPromises } from 'fs'
+import { SearchFiles } from './dto/file-response.dto';
 
 @Controller('file-mp')
 export class FileMPController {
@@ -43,19 +44,9 @@ export class FileMPController {
         return this.fileMPService.getByOrderDocumentAndCompany(orderDocumentNumber, companyId);
     }
 
-    @Get('by-order/:correlative/:orderTypeId/:period/:companyId')
-    async getByOrder(
-        @Param('correlative') correlative: string,
-        @Param('orderTypeId') orderTypeId: string,
-        @Param('period') period: string,
-        @Param('companyId') companyId: string,
-    ) {
-        return this.fileMPService.getByOrder(
-            correlative,
-            orderTypeId,
-            period,
-            companyId,
-        );
+    @Get('by-order')
+    async getByOrder(@Query(new ValidationPipe({ transform: true })) query: SearchFiles) {
+        return this.fileMPService.getByOrderAndType(query);
     }
 
 
