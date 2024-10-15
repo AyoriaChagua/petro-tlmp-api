@@ -159,6 +159,8 @@ export class OrderMPService {
                 total: order.total,
                 detraction: order.detraction,
                 perception: order.perception,
+                detractionCalc: order.detractionCalc,
+                perceptionCalc: order.perceptionCalc,
                 retention: order.retention,
                 tax: order.tax,
                 isAffectedIGV: order.isAffectedIGV,

@@ -64,6 +64,8 @@ export class GetOrderDocumentDto {
     tax: number;
     perception: number;
     detraction: number;
+    perceptionCalc: number;
+    detractionCalc: number;
     @Type(() => OrderDocumentDto)
     documents: OrderDocumentDto[];
 }

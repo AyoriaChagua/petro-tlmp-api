@@ -52,7 +52,6 @@ export class OrderMPController {
         }
     }*/
 
-    @UseGuards(JwtAuthGuard)
     @Get('with-documents')
     async getOrdersWithDocuments(
         @Query(new ValidationPipe({ transform: true })) query: FilterFieldsDto
