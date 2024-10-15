@@ -55,6 +55,7 @@ export class OrderMPService {
         const cia = await this.ciaService.findOne(orderSearched.companyId);
 
         const order: Order = {
+            companyRuc: cia.ruc,
             companyName: cia.description,
             companyAddress: cia.address.description,
             orderType: OrderTypeEnum[query.orderTypeId as keyof typeof OrderTypeEnum],

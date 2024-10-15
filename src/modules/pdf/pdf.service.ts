@@ -133,7 +133,7 @@ export class PdfService {
   };
 
 
-  async addAuthorizationBox( approver: string, withSignature: boolean = false) {
+  async addAuthorizationBox(approver: string, withSignature: boolean = false) {
     const startX = this.x - 5;
     const startY = this.y - 5;
     const width = 350;
@@ -155,21 +155,25 @@ export class PdfService {
     this.addText('AUTORIZADO POR:', { x: startX + 5, y: startY + headerHeight + rowHeight + 10, fontSize: 7, isBlack: true, isBold: true });
     this.addText('ROIMY MATOS', { x: startX + 75, y: startY + headerHeight + rowHeight + 10, fontSize: 7 });
     this.addText('AUTORIZADO POR:', { x: startX + width / 2 + 5, y: startY + headerHeight + rowHeight + 10, fontSize: 7, isBlack: true, isBold: true });
-    this.addText(approver.toUpperCase(), { x: startX + width / 2 + 75, y: startY + headerHeight + rowHeight + 10, fontSize: 7 });
+
+    if (approver === "JACKELYN VIERA") {
+      this.addText(approver.toUpperCase(), { x: startX + width / 2 + 75, y: startY + headerHeight + rowHeight + 10, fontSize: 7 });
+
+    }
 
 
 
-    if (withSignature) {
+    if (withSignature && approver === "JACKELYN VIERA") {
 
-      const imgBuffer = fs.readFileSync('./assets/images/signature.jpeg');
+      const imgBuffer = fs.readFileSync('./assets/images/signature.png');
       const base64Image = imgBuffer.toString('base64');
       this.doc.addImage(
         base64Image,
         'JPEG',
-        startX + width / 2 + 5,
-        startY + headerHeight + 10,
-        150,
-        50
+        startX + width / 2 + 20,
+        startY + headerHeight + 1,
+        120,
+        85
       );
     }
 

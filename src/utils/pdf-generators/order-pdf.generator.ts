@@ -38,6 +38,12 @@ export class OrderPdfGenerator {
                 fontSize: 8,
             });
             await this.pdfService.addNewLine();
+            await this.pdfService.addText("RUC: " + order.companyRuc, {
+                color: "primary",
+                align: "center",
+                fontSize: 8,
+            });
+            await this.pdfService.addNewLine();
             await this.pdfService.addNewLine();
 
             await this.pdfService.addText(`${order.orderType} N° ${order.orderNumber}`, {

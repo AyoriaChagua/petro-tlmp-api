@@ -12,7 +12,7 @@ import * as fs from 'fs';
 import { Response } from 'express';
 
 @Controller('order-mp')
-@UseGuards(JwtAuthGuard)
+//@UseGuards(JwtAuthGuard)
 export class OrderMPController {
     constructor(
         private readonly orderMPService: OrderMPService

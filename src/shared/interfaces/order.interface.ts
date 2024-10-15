@@ -1,6 +1,7 @@
 import { AccountType, Currency } from "../types/order.type"
 
 export interface Order {
+    companyRuc: string;
     companyName: string
     companyAddress: string
     orderType: string
