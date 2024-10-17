@@ -90,3 +90,16 @@ export const formatCurrency = (amount: number = 0): string => {
     const formattedDecimalPart = decimalPart.padEnd(2, '0');
     return `${formatIntegerPart}.${formattedDecimalPart}`;
 }
+
+export const getCurrencySymbol = (currency: string) => {
+    switch (currency) {
+        case "PEN":
+            return "S/"
+        case "USD":
+            return "$"
+        case "EUR":
+            return "€"
+        default:
+            return ""
+    }
+}
