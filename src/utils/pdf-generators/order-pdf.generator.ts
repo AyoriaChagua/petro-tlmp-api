@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { PdfService } from "src/modules/pdf/pdf.service";
 import { Detail, Order } from "src/shared/interfaces/order.interface";
 import { formatDate } from "../formatters/date.formatter";
-import { formatCurrency, numberToText } from "../formatters/currency.formatter";
+import { formatCurrency, getCurrencyDescription, numberToText } from "../formatters/currency.formatter";
 
 @Injectable()
 export class OrderPdfGenerator {
@@ -251,7 +251,7 @@ export class OrderPdfGenerator {
                 x: 190
             });
 
-            await this.pdfService.addText(order.currency, {
+            await this.pdfService.addText(getCurrencyDescription(order.currency), {
                 fontSize: 7,
                 x: 230
             });

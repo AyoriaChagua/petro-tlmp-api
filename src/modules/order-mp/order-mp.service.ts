@@ -193,7 +193,7 @@ export class OrderMPService {
 
                     } as OrderDocumentDto;
                 })),
-                payments: await Promise.all((order.orderPayment || []).map(async (payment) => {
+                payments: await Promise.all((order.orderPayment || []).filter(payment => payment.isActive).map(async (payment) => {
                     const paymentFile = await this.fileMPRepository.findOne({
                         where: {
                             paymentId: payment.paymentId,

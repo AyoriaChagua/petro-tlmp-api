@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { FileMP } from "../file-mp/file-mp.entity";
 import { OrderMP } from "../order-mp/order-mp.entity";
 
@@ -42,10 +42,10 @@ export class OrderPayment {
         { name: 'CIA', referencedColumnName: 'companyId' },
         { name: 'ID_TIPO_ORDEN', referencedColumnName: 'orderTypeId' },
         { name: 'PERIODO', referencedColumnName: 'period' },
-        { name: 'CORRELATIVO', referencedColumnName: 'correlative' }
+        { name: 'CORRELATIVO', referencedColumnName: 'correlative' },
     ])
     order: OrderMP;
 
-    @OneToMany(() => FileMP, file => file.order)
-    file: FileMP[];
+    @OneToOne(() => FileMP, file => file.orderPayment)
+    file: FileMP;
 }

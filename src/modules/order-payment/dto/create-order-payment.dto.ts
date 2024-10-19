@@ -29,3 +29,22 @@ export class CreateOrderPaymentDto {
     @IsDate()
     paymentDate: Date;
 }
+
+export class UpdateOrderPaymentDto {
+    @IsNotEmpty()
+    @IsString()
+    @MaxLength(10)
+    currency: string;
+
+    @IsNotEmpty()
+    @IsNumber()
+    paidAmount: number;
+
+    @IsDate()
+    paymentDate: Date;
+
+    @IsString()
+    @MaxLength(20)
+    systemUser?: string;
+
+}

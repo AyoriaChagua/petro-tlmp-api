@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards, Query, ValidationPipe } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { OrderPaymentService } from './order-payment.service';
-import { CreateOrderPaymentDto } from './dto/create-order-payment.dto';
+import { CreateOrderPaymentDto, UpdateOrderPaymentDto } from './dto/create-order-payment.dto';
 import { OrderPayment } from './order-payment.entity';
 import { FieldsSearch } from './dto/query.dto';
 
@@ -19,13 +19,13 @@ export class PaymentDocumentController {
     @Get()
     async getPaymentsByOrder(
         @Query(new ValidationPipe({ transform: true })) query: FieldsSearch
-    ): Promise<OrderPayment[]> {
+    ): Promise<Partial<OrderPayment>[]> {
         return await this.orderPaymentService.findByOrder(query);
     }
 
     @UseGuards(JwtAuthGuard)
     @Put(':id')
-    update(@Param('id') id: string, @Body() updatePaymentDocumentDto: Partial<CreateOrderPaymentDto>): Promise<OrderPayment> {
+    update(@Param('id') id: string, @Body() updatePaymentDocumentDto: UpdateOrderPaymentDto): Promise<OrderPayment> {
         return this.orderPaymentService.update(+id, updatePaymentDocumentDto);
     }
 

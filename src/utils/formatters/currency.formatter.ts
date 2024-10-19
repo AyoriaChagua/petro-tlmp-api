@@ -66,19 +66,7 @@ export const numberToText = (amount: number, currency: Currency) => {
     const intAmount = parseInt(intPart, 10);
     const numberText = convertNumber(intAmount);
 
-    let currencyText: string;
-
-    switch (currency) {
-        case "PEN":
-            currencyText = "SOLES";
-            break;
-        case "EUR":
-            currencyText = "EUROS";
-            break;
-        case "USD":
-            currencyText = "DOLARES";
-            break;
-    }
+    let currencyText: string = getCurrencyDescription(currency);
 
     return `${numberText} ${decimalPart}/100 ${currencyText}`
 }
@@ -91,15 +79,15 @@ export const formatCurrency = (amount: number = 0): string => {
     return `${formatIntegerPart}.${formattedDecimalPart}`;
 }
 
-export const getCurrencySymbol = (currency: string) => {
+export const getCurrencyDescription = (currency: Currency) => {
     switch (currency) {
         case "PEN":
-            return "S/"
-        case "USD":
-            return "$"
+            return  "SOLES";
         case "EUR":
-            return "€"
-        default:
-            return ""
+            return "EUROS";
+        case "USD":
+            return "DOLARES";
+        default: 
+            return "-";
     }
 }

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { DatabaseErrorService } from "src/shared/database-error.service";
-import { CreateOrderPaymentDto } from "./dto/create-order-payment.dto";
+import { CreateOrderPaymentDto, UpdateOrderPaymentDto } from "./dto/create-order-payment.dto";
 import { OrderPayment } from "./order-payment.entity";
 import { FieldsSearch } from "./dto/query.dto";
 
@@ -46,19 +46,36 @@ export class OrderPaymentService {
         }
     }
 
-    async findByOrder(query: FieldsSearch): Promise<OrderPayment[]>{
+    async findByOrder(query: FieldsSearch): Promise<{ paymentId: number; fileId: number }[]> {
         try {
             const { companyId, correlative, orderTypeId, period } = query;
-            return await this.orderPaymentRepository.find({
-                where: { companyId, correlative, orderTypeId, period, isActive: true }
+            const results = await this.orderPaymentRepository.find({
+                where: { companyId, correlative, orderTypeId, period, isActive: true },
+                relations: ['file']
             });
+    
+            return results.map(payment => ({
+                paymentId: payment.paymentId,
+                companyId: payment.companyId,
+                orderTypeId: payment.orderTypeId,
+                period: payment.period,
+                correlative: payment.correlative,
+                currency: payment.currency,
+                paidAmount: payment.paidAmount,
+                fileId: payment.file?.id,
+                paymentDate: payment.paymentDate,
+                systemUser: payment.systemUser.toUpperCase(),
+                isActive: payment.isActive
+            }));
         } catch (error) {
-            console.log(error)
+            console.log(error);
             this.databaseErrorService.handleDatabaseError(error, 'Document payment');
+            return [];
         }
     }
+    
 
-    async update(id: number, updatePaymentDocumentDto: Partial<CreateOrderPaymentDto>): Promise<OrderPayment> {
+    async update(id: number, updatePaymentDocumentDto: UpdateOrderPaymentDto): Promise<OrderPayment> {
         try {
             const orderPayment = await this.findOne(id);
             Object.assign(orderPayment, updatePaymentDocumentDto);
