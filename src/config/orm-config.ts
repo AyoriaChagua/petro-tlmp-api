@@ -19,6 +19,7 @@ import { SunatDocumentType } from 'src/modules/maintanance/sunat-document-type/s
 import { Provider } from 'src/modules/maintanance/provider/provider.entity';
 import { OrderDocumentMP } from 'src/modules/order-document-mp/order-document-mp.entity';
 import { OrderPayment } from 'src/modules/order-payment/order-payment.entity';
+import { ExchangeRate } from 'src/modules/maintanance/exchange-rate/exchange-rate.entity';
 
 
 export const ormConfig: TypeOrmModuleOptions = {
@@ -46,7 +47,8 @@ export const ormConfig: TypeOrmModuleOptions = {
         FileMP,
         FileTypeOrder,
         SunatDocumentType,
-        OrderPayment
+        OrderPayment,
+        ExchangeRate
     ],
     synchronize: false,
     logging: false,

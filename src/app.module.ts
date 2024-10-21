@@ -24,6 +24,7 @@ import { SharedModule } from './shared/shared.module';
 import { ProviderModule } from './modules/maintanance/provider/provider.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { OrderPaymentModule } from './modules/order-payment/order-payment.module';
+import { ExchangeRateModule } from './modules/maintanance/exchange-rate/exchange-rate.module';
 
 @Module({
   imports: [
@@ -51,7 +52,8 @@ import { OrderPaymentModule } from './modules/order-payment/order-payment.module
     OrderDocumentMPModule,
     FileMPModule,
     SharedModule,
-    OrderPaymentModule
+    OrderPaymentModule,
+    ExchangeRateModule
   ],
   controllers: [AppController],
   providers: [AppService],
