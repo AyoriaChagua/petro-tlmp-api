@@ -2,12 +2,12 @@ import { Controller, Get, Post, Put, Param, Body, UseGuards, HttpException, Http
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { OrderMPService } from './order-mp.service';
 import { GetFullOrderMPResponseDto } from './dto/get-full-order-mp-respose.dto';
-import { GetOrderDocumentDto } from './dto/get-order-document.dto';
+import { GetOrderDocumentDto, OrderManagement } from './dto/get-order-document.dto';
 import { CreateOrderMPDto } from './dto/create-order-mp.dto';
 import { OrderMP } from './order-mp.entity';
 import { DuplicateOrderMPDto } from './dto/duplicate-order-mp.dto';
 import { UpdateOrderMPDto } from './dto/update-order-mp.dto';
-import { FieldsPDF, FilterFieldsDto } from './dto/filter-fields.dto';
+import { FieldsManagement, FieldsPDF, FilterFieldsDto } from './dto/filter-fields.dto';
 import * as fs from 'fs';
 import { Response } from 'express';
 
@@ -34,6 +34,18 @@ export class OrderMPController {
         } catch (error) {
             console.error('error', error);
             throw error;
+        }
+    }
+
+    @Get('management')
+    async getOrderForManagement(
+        @Query() query: FieldsManagement
+    ): Promise<OrderManagement[]> {
+        try {
+            return await this.orderMPService.getOrderForManagement(query);
+        } catch (error) {
+            console.log(error)
+            throw new HttpException('Error getting orders with documents', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

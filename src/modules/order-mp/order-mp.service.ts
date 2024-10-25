@@ -7,10 +7,10 @@ import { CorrelativeControlService } from 'src/modules/maintanance/correlative-c
 import { DuplicateOrderMPDto } from './dto/duplicate-order-mp.dto';
 import { GetFullOrderMPResponseDto } from './dto/get-full-order-mp-respose.dto';
 import { UpdateOrderMPDto } from './dto/update-order-mp.dto';
-import { GetOrderDocumentDto, OrderDocumentDto } from './dto/get-order-document.dto';
+import { GetOrderDocumentDto, OrderDocumentDto, OrderManagement } from './dto/get-order-document.dto';
 import { FileMP } from 'src/modules/file-mp/file-mp.entity';
 import { OrderDetail } from 'src/modules/order-det-mp/order-det-mp.entity';
-import { FieldsPDF, FilterFieldsDto } from './dto/filter-fields.dto';
+import { FieldsManagement, FieldsPDF, FilterFieldsDto } from './dto/filter-fields.dto';
 import { PdfService } from '../pdf/pdf.service';
 import { Detail, Order } from 'src/shared/interfaces/order.interface';
 import { OrderPdfGenerator } from 'src/utils/pdf-generators/order-pdf.generator';
@@ -94,7 +94,7 @@ export class OrderMPService {
                 price: formatCurrency(detail.unitPrice),
                 discount: null,
                 amount: formatCurrency(detail.subtotal)
-            }))            
+            }))
         };
 
         return [await this.orderPdfGenerator.generateOrderPdf(order), `${order.orderType} N° ${order.orderNumber}`];
@@ -217,6 +217,69 @@ export class OrderMPService {
         return result;
     }
 
+    async getOrderForManagement(filterFields: FieldsManagement): Promise<OrderManagement[]> {
+        try {
+            const { companyId, managementType, orderTypeId, period, correlative } = filterFields;
+
+            const queryBuilder = this.orderMPRepository.createQueryBuilder('order')
+                .leftJoinAndSelect('order.supplier', 'supplier')
+                .where('order.companyId = :companyId', { companyId })
+                .andWhere('order.period = :period', { period })
+                .andWhere('order.orderTypeId = :orderTypeId', { orderTypeId });
+
+            if (correlative) {
+                queryBuilder.andWhere('order.correlative LIKE :correlative', { correlative: `%${correlative}%` });
+            }
+
+            if (managementType === 'document') {
+                queryBuilder.leftJoinAndSelect('order.orderDocument', 'orderDocument');
+            } else if (managementType === 'payment') {
+                queryBuilder.leftJoinAndSelect('order.orderPayment', 'orderPayment');
+            }
+
+            const orders = await queryBuilder.getMany();
+
+            if (!orders || orders.length === 0) {
+                throw new Error('Orders not found');
+            }
+
+            const result: OrderManagement[] = orders.map((order) => {
+                const baseOrder: OrderManagement = {
+                    correlative: order.correlative,
+                    providerDescription: order.supplier?.description,
+                    providerRuc: order.supplier?.ruc,
+                    user: order.systemUser,
+                    currency: order.currency,
+                    total: order.total,
+                };
+
+                if (managementType === 'document') {
+                    baseOrder.documents = order.orderDocument?.map((doc) => ({
+                        documentNumber: doc.orderDocumentNumber,
+                        total: doc.total,
+                        annotation: doc.annotation,
+                    }));
+                }
+
+                if (managementType === 'payment') {
+                    baseOrder.payments = order.orderPayment
+                        ?.filter((payment) => payment.isActive)
+                        .map((payment) => ({
+                            payDate: payment.paymentDate,
+                            paidAmount: payment.paidAmount,
+                            currency: payment.currency,
+                        }));
+                }
+
+                return baseOrder;
+            });
+
+            return result;
+        } catch (error) {
+            console.log(error)
+            throw new InternalServerErrorException('Error while getting the orders.');
+        }
+    }
 
     private async findOrderDetail(companyId: string, orderTypeId: string, period: string, correlative: string): Promise<string> {
         const details = await this.orderDetailRepository.find({

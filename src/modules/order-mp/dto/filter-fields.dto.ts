@@ -21,15 +21,15 @@ export class FilterFieldsDto {
     @IsOptional()
     @IsString()
     documentTypeId?: string;
-    
+
     @IsOptional()
     @IsString()
     orderNumber?: string;
-    
+
     @IsOptional()
     @IsString()
     supplierRuc?: string;
-    
+
     @IsOptional()
     @IsNumber()
     @Type(() => Number)
@@ -50,4 +50,17 @@ export class FieldsPDF {
     period: string;
     @IsString()
     correlative: string;
+}
+
+export class FieldsManagement {
+    @IsString()
+    orderTypeId: string;
+    @IsString()
+    correlative?: string;
+    @IsString()
+    managementType: "order" | "document" | "payment";
+    @IsString()
+    companyId: string;
+    @IsString()
+    period: string;
 }

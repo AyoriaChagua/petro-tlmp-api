@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from "@nestjs/common";
+import { Controller, Get, Query, UseGuards } from "@nestjs/common";
 import { ExchangeRateService } from "./exchange-rate.service";
 import { JwtAuthGuard } from "src/modules/auth/jwt.guard";
 import { ExchangeRateDTO } from "./dto/exchange-rate.dto";
@@ -11,7 +11,15 @@ export class ExchangeRateController {
     ) { }
 
     @Get()
-    async getAllExchangeRates(): Promise<ExchangeRateDTO[]> {
-        return await this.exchangeRateService.findAll();
+    async getAllExchangeRates(
+        @Query('page') page: number,
+        @Query('limit') limit: number
+    ): Promise<ExchangeRateDTO[]> {
+        return await this.exchangeRateService.findAll(page, limit);
+    }
+
+    @Get('total-number')
+    async getTotalExchangeRates(): Promise<number> {
+        return await this.exchangeRateService.getTotalNumber();
     }
 }

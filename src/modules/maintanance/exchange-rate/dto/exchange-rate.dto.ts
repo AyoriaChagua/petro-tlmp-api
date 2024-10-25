@@ -3,3 +3,8 @@ export class ExchangeRateDTO {
     purchase_price: number;
     sale_price: number;
 }
+
+export class ExchangeRatePaginationDTO {
+    quantity: number;
+    exchangeRates: ExchangeRateDTO[];
+}

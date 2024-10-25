@@ -13,7 +13,7 @@ export class PaymentDto {
     paidAmount: number
     isActive: boolean
     currency: string
-    
+
     @Type(() => FileDto)
     paymentFile: FileDto;
 }
@@ -33,7 +33,7 @@ export class OrderDocumentDto {
     sunatCode: string;
     taxCalc: number;
     retentionCalc: number;
-    
+
     @Type(() => FileDto)
     invoiceFile: FileDto;
 
@@ -69,3 +69,27 @@ export class GetOrderDocumentDto {
     @Type(() => OrderDocumentDto)
     documents: OrderDocumentDto[];
 }
+
+export class OrderManagement {
+    correlative: string;
+    providerDescription: string;
+    providerRuc: string;
+    user: string;
+    currency: string;
+    total: number;
+    documents?: DocumentManagement[];
+    payments?: PaymentManagement[];
+}
+
+class DocumentManagement {
+    documentNumber: string;
+    total: number;
+    annotation: string;
+}
+
+class PaymentManagement {
+    payDate: Date;
+    paidAmount: number;
+    currency: string;
+}
+

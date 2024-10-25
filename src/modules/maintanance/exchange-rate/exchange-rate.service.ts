@@ -13,7 +13,7 @@ export class ExchangeRateService {
         private databaseErrorService: DatabaseErrorService
     ) { }
 
-    async findAll(): Promise<ExchangeRateDTO[]> {
+    async findAll(page: number = 1, limit: number = 10): Promise<ExchangeRateDTO[]> {
         try {
             const results = await this.exchangeRateRepository
                 .createQueryBuilder('exchange')
@@ -21,6 +21,8 @@ export class ExchangeRateService {
                 .where('exchange.date >= :date', { date: '2024-01-01' })
                 .groupBy('exchange.date, exchange.purchase_price, exchange.sale_price')
                 .orderBy('exchange.date', 'DESC')
+                .skip((page - 1) * limit)
+                .take(limit)
                 .getRawMany() as ExchangeRateDTO[];
 
             return results.map(result => ({
@@ -28,6 +30,14 @@ export class ExchangeRateService {
                 purchase_price: result.purchase_price,
                 sale_price: result.sale_price,
             }));
+        } catch (error) {
+            this.databaseErrorService.handleDatabaseError(error, 'Exchange rate');
+        }
+    }
+
+    async getTotalNumber(): Promise<number> {
+        try {
+            return await this.exchangeRateRepository.count();
         } catch (error) {
             this.databaseErrorService.handleDatabaseError(error, 'Exchange rate');
         }
