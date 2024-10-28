@@ -63,4 +63,8 @@ export class FieldsManagement {
     companyId: string;
     @IsString()
     period: string;
+    @IsNumber()
+    page: number;
+    @IsNumber()
+    limit: number;
 }

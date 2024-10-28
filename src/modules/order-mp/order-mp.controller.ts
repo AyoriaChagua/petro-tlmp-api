@@ -49,6 +49,18 @@ export class OrderMPController {
         }
     }
 
+    @Get('management/count')
+    async countOrdersForManagement(
+        @Query() query: FieldsManagement
+    ): Promise<number> {
+        try {
+            return await this.orderMPService.countOrdersForManagement(query);
+        } catch (error) {
+            throw new HttpException('Error getting orders with documents', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 /*    @UseGuards(JwtAuthGuard)
     @Get(':companyId/:orderTypeId/:period/:correlative')
     async findById(
@@ -71,7 +83,6 @@ export class OrderMPController {
         try {
             return await this.orderMPService.getOrdersWithDocuments(query);
         } catch (error) {
-            console.log(error)
             throw new HttpException('Error getting orders with documents', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -82,7 +93,6 @@ export class OrderMPController {
         try {
             return await this.orderMPService.create(createOrderMPDto);
         } catch (error) {
-            console.log(error)
             throw new HttpException('Error creating order', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

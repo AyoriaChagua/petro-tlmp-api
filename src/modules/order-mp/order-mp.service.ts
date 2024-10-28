@@ -219,10 +219,11 @@ export class OrderMPService {
 
     async getOrderForManagement(filterFields: FieldsManagement): Promise<OrderManagement[]> {
         try {
-            const { companyId, managementType, orderTypeId, period, correlative } = filterFields;
+            const { companyId, managementType, orderTypeId, period, correlative, limit = 10, page = 1 } = filterFields;
 
             const queryBuilder = this.orderMPRepository.createQueryBuilder('order')
                 .leftJoinAndSelect('order.supplier', 'supplier')
+                .leftJoinAndSelect('order.costCenter', 'costCenter')
                 .where('order.companyId = :companyId', { companyId })
                 .andWhere('order.period = :period', { period })
                 .andWhere('order.orderTypeId = :orderTypeId', { orderTypeId });
@@ -237,20 +238,30 @@ export class OrderMPService {
                 queryBuilder.leftJoinAndSelect('order.orderPayment', 'orderPayment');
             }
 
+            queryBuilder
+                .skip((page - 1) * limit)
+                .take(limit);
+
             const orders = await queryBuilder.getMany();
 
-            if (!orders || orders.length === 0) {
-                throw new Error('Orders not found');
-            }
+            if (!orders || orders.length === 0) return [];
 
             const result: OrderManagement[] = orders.map((order) => {
                 const baseOrder: OrderManagement = {
+                    companyId: order.companyId,
+                    orderTypeId: order.orderTypeId,
+                    period: order.period,
                     correlative: order.correlative,
                     providerDescription: order.supplier?.description,
                     providerRuc: order.supplier?.ruc,
                     user: order.systemUser,
                     currency: order.currency,
                     total: order.total,
+                    costCenterDescription: order.costCenter.description,
+                    retention: order.retention,
+                    tax: order.tax,
+                    detraction: order.detraction,
+                    perception: order.perception
                 };
 
                 if (managementType === 'document') {
@@ -268,6 +279,7 @@ export class OrderMPService {
                             payDate: payment.paymentDate,
                             paidAmount: payment.paidAmount,
                             currency: payment.currency,
+                            paymentId: payment.paymentId
                         }));
                 }
 
@@ -276,8 +288,26 @@ export class OrderMPService {
 
             return result;
         } catch (error) {
-            console.log(error)
             throw new InternalServerErrorException('Error while getting the orders.');
+        }
+    }
+
+    async countOrdersForManagement(filterFields: FieldsManagement): Promise<number> {
+        try {
+            const { companyId, managementType, orderTypeId, period, correlative } = filterFields;
+    
+            const countQueryBuilder = this.orderMPRepository.createQueryBuilder('order')
+                .where('order.companyId = :companyId', { companyId })
+                .andWhere('order.period = :period', { period })
+                .andWhere('order.orderTypeId = :orderTypeId', { orderTypeId });
+    
+            if (correlative) {
+                countQueryBuilder.andWhere('order.correlative LIKE :correlative', { correlative: `%${correlative}%` });
+            }
+    
+            return await countQueryBuilder.getCount();
+        } catch (error) {
+            throw new InternalServerErrorException('Error while counting the orders.');
         }
     }
 
@@ -313,7 +343,6 @@ export class OrderMPService {
 
             return savedOrderMP;
         } catch (error) {
-            console.log(error)
             if (error.number === 2627 || error.number === 2601) {
                 throw new ConflictException('An order with the same primary key already exists.');
             }

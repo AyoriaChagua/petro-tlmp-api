@@ -71,12 +71,20 @@ export class GetOrderDocumentDto {
 }
 
 export class OrderManagement {
+    companyId: string;
+    orderTypeId: string;
+    period : string;
     correlative: string;
     providerDescription: string;
     providerRuc: string;
     user: string;
     currency: string;
     total: number;
+    tax: number | null;
+    retention: number | null;
+    perception: number | null;
+    detraction: number | null;
+    costCenterDescription: string;
     documents?: DocumentManagement[];
     payments?: PaymentManagement[];
 }
@@ -91,5 +99,6 @@ class PaymentManagement {
     payDate: Date;
     paidAmount: number;
     currency: string;
+    paymentId: number
 }
 
