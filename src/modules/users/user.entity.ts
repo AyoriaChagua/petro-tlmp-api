@@ -20,4 +20,7 @@ export class User {
 
     @OneToMany(() => UserRole, userRole => userRole.user)
     userRoles: UserRole[];
+
+    @Column({ name: 'FOTO_PERFIL', type: 'varbinary', nullable: true, length: 'max' })
+    profilePhoto: Buffer;
 }

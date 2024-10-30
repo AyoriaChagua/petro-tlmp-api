@@ -25,6 +25,7 @@ import { ProviderModule } from './modules/maintanance/provider/provider.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { OrderPaymentModule } from './modules/order-payment/order-payment.module';
 import { ExchangeRateModule } from './modules/maintanance/exchange-rate/exchange-rate.module';
+import { EmailMPModule } from './modules/email-mp/email-mp.module';
 
 @Module({
   imports: [
@@ -53,7 +54,8 @@ import { ExchangeRateModule } from './modules/maintanance/exchange-rate/exchange
     FileMPModule,
     SharedModule,
     OrderPaymentModule,
-    ExchangeRateModule
+    ExchangeRateModule,
+    EmailMPModule
   ],
   controllers: [AppController],
   providers: [AppService],

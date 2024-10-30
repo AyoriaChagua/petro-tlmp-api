@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -115,4 +115,23 @@ export class UserService {
     }
     return null;
   }
+
+  async saveProfilePhoto(userId: string, profilePhoto: Buffer) {
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    if (user) {
+      user.profilePhoto = profilePhoto;
+      await this.userRepository.save(user);
+      return;
+    }
+    return null;
+  }
+
+  async getProfilePhoto(userId: string) {
+    const user = await this.userRepository.findOne({ where: { id: userId }, select: ["profilePhoto"] });
+    if (!user || !user.profilePhoto) {
+      throw new NotFoundException(`Photo not found for ${user}`);
+    }
+    return user.profilePhoto;
+  }
+
 }

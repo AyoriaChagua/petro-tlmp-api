@@ -96,8 +96,8 @@ export class OrderMP {
     @Column({ name: 'FECHA_MOD', type: 'varchar', length: 50, nullable: true })
     modifiedDate: string;
 
-    @Column({ name: 'FECHA_SISTEMA', type: 'varchar', length: 50, nullable: true, default: () => 'getdate()' })
-    systemDate: string;
+    @Column({ name: 'FECHA_SISTEMA', type: 'datetime', nullable: true, default: () => 'getdate()' })
+    systemDate: Date;
 
     @Column({ name: 'SUBTOTAL', type: 'decimal', precision: 10, scale: 3, nullable: true })
     subtotal: number;

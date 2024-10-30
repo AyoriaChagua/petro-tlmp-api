@@ -78,6 +78,7 @@ export class OrderManagement {
     providerDescription: string;
     providerRuc: string;
     user: string;
+    orderDate: Date;
     currency: string;
     total: number;
     tax: number | null;

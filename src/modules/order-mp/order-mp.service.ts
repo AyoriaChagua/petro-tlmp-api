@@ -239,6 +239,7 @@ export class OrderMPService {
             }
 
             queryBuilder
+                .orderBy('order.correlative', 'DESC')
                 .skip((page - 1) * limit)
                 .take(limit);
 
@@ -261,7 +262,8 @@ export class OrderMPService {
                     retention: order.retention,
                     tax: order.tax,
                     detraction: order.detraction,
-                    perception: order.perception
+                    perception: order.perception,
+                    orderDate: order.orderDate
                 };
 
                 if (managementType === 'document') {
