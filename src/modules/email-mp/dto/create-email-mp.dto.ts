@@ -1,9 +1,9 @@
 import { IsNotEmpty, IsEmail, IsOptional, IsString, IsInt } from 'class-validator';
 
 export class CreateEmailMPDto {
-    @IsInt()
+    @IsString()
     @IsNotEmpty()
-    userId: number;
+    userId: string;
 
     @IsString()
     @IsNotEmpty()

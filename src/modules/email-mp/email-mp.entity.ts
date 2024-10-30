@@ -5,8 +5,8 @@ export class EmailMP {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ name: 'ID_USUARIO', type: 'int' })
-    userId: number;
+    @Column({ name: 'ID_USUARIO', type: 'varchar', length: 20 })
+    userId: string;
 
     @Column({ name: 'ASUNTO', type: 'varchar', length: 255 })
     subject: string;
@@ -32,6 +32,4 @@ export class EmailMP {
     @Column({ name: 'LOTE_DIARIO', type: 'int', nullable: true })
     dailyBatch: number;
 
-    @Column({ name: 'ID_CORREO', type: 'int', nullable: true })
-    emailId: number;
 }
